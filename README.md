@@ -1,2 +1,6 @@
 # Digital-Payment
-Project for solving the problems of digital payments. It is a project idea is presented in a hackthon for Finyology competition.
+### Authors ⚡👨‍💻 :
+#### 1.Fatema ElZhraa ElFiky
+#### 2.Ahmed Hussien
+#### 3.Mawada Emad
+#### 4.Menna Abd-ElGawad
