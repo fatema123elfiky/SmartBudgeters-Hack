@@ -1,4 +1,4 @@
-# Digital-Payment
+# SmartBudgeters
 ### Authors ⚡👨‍💻 :
 #### 1.Fatema ElZhraa ElFiky
 #### 2.Ahmed Hussien
