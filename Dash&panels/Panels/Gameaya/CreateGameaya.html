@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Budgeters - Create Money Circle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --success: #4ad66d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        header {
+            padding: 2rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            clip-path: ellipse(100% 100% at 50% 0%);
+            padding-bottom: 6rem;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-left: 1rem;
+            color: var(--accent);
+        }
+        
+        .logo-text {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(to right, white 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 2;
+            margin-top: -5rem;
+            padding: 0 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+        
+        .gameaya-card {
+            composes: glass-card;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            text-align: center;
+        }
+        
+        .form-subtitle {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #6c757d;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.1);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+        }
+        
+        .input-icon-wrapper {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 1rem;
+            color: #6c757d;
+        }
+        
+        .icon-input {
+            padding-left: 3rem;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(76, 201, 240, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 201, 240, 0.5);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            right: 100%;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--dark);
+            border: 2px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(76, 201, 240, 0.1);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(76, 201, 240, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 201, 240, 0.2);
+        }
+
+        .btn-add-member {
+            background-color: var(--success);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(74, 214, 109, 0.4);
+            margin-bottom: 2rem;
+        }
+
+        .btn-add-member:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 214, 109, 0.5);
+        }
+        
+        .progress-container {
+            margin-bottom: 2.5rem;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background-color: #e9ecef;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .step.active .step-number {
+            background-color: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+        }
+        
+        .step-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-align: center;
+        }
+        
+        .step.active .step-label {
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        
+        .progress {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 4px;
+            width: 33.33%;
+            transition: all 0.3s ease;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(67, 97, 238, 0.1);
+        }
+        
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .currency-input {
+            position: relative;
+        }
+        
+        .currency-input::before {
+            content: "$";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        .currency-input input {
+            padding-left: 3rem;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            filter: blur(40px);
+        }
+        
+        .element-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: 10%;
+            left: 5%;
+        }
+        
+        .element-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            bottom: 15%;
+            right: 10%;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .member-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .member-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-title {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .member-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            color: var(--dark);
+        }
+
+        .delete-btn:hover {
+            color: #dc3545;
+        }
+
+        .move-btn:hover {
+            color: var(--primary);
+        }
+
+        .members-list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .members-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .members-list::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+
+        .members-list::-webkit-scrollbar-thumb {
+            background: rgba(76, 201, 240, 0.5);
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .gameaya-card {
+                padding: 1.5rem;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .form-row .form-group {
+                width: 100%;
+            }
+            
+            .button-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+     <div id="navbar-placeholder"></div>
+    <div class="floating-elements">
+        <div class="floating-element element-1"></div>
+        <div class="floating-element element-2"></div>
+    </div>
+    
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-handshake logo-icon"></i>
+            <h1 class="logo-text">Smart Money Circle</h1>
+        </div>
+        <p class="tagline">Create a new money circle easily and securely</p>
+    </header>
+    
+    <div class="main-content">
+        <div class="gameaya-card glass-card">
+            <h2 class="form-title">Create Money Circle</h2>
+            <p class="form-subtitle">Enter the money circle details and participating members</p>
+            
+            <div class="progress-container">
+                <div class="progress-steps">
+                    <div class="step active">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Circle Info</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Add Members</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Confirm & Create</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+            </div>
+
+            <form id="gameayaForm">
+                <div class="section-title">Basic Money Circle Information</div>
+
+                <div class="form-group">
+                    <label for="gameayaName" class="form-label">Circle Name</label>
+                    <div class="input-icon-wrapper">
+                        <input type="text" id="gameayaName" name="gameayaName" class="form-control icon-input" placeholder="Example: Family Circle, Friends Circle, etc." required>
+                        <i class="fas fa-file-signature input-icon"></i>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="monthlyAmount" class="form-label">Monthly Payment Amount</label>
+                        <div class="currency-input">
+                            <input type="number" id="monthlyAmount" name="monthlyAmount" class="form-control" placeholder="0.00" min="100" step="1" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="membersCount" class="form-label">Number of Members</label>
+                        <div class="input-icon-wrapper">
+                            <input type="number" id="membersCount" name="membersCount" class="form-control icon-input" placeholder="Enter number of members" min="2" max="24" required>
+                            <i class="fas fa-users input-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="duration" class="form-label">Duration (months)</label>
+                        <div class="input-icon-wrapper">
+                            <input type="number" id="duration" name="duration" class="form-control icon-input" placeholder="Enter circle duration in months" min="2" max="24" required>
+                            <i class="fas fa-calendar-alt input-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startDate" class="form-label">Start Date</label>
+                        <div class="input-icon-wrapper">
+                            <input type="date" id="startDate" name="startDate" class="form-control icon-input" required>
+                            <i class="fas fa-calendar input-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentDay" class="form-label">Monthly Payment Day</label>
+                    <div class="input-icon-wrapper">
+                        <select id="paymentDay" name="paymentDay" class="form-control icon-input" required>
+                            <option value="" selected disabled>Choose monthly payment day</option>
+                            <option value="1">1st day of the month</option>
+                            <option value="5">5th day of the month</option>
+                            <option value="10">10th day of the month</option>
+                            <option value="15">15th day of the month</option>
+                            <option value="20">20th day of the month</option>
+                            <option value="25">25th day of the month</option>
+                            <option value="last">Last day of the month</option>
+                        </select>
+                        <i class="fas fa-money-bill-wave input-icon"></i>
+                    </div>
+                </div>
+
+                <div class="section-title">Circle Founder (Administrator)</div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="adminName" class="form-label">Founder Name</label>
+                        <div class="input-icon-wrapper">
+                            <input type="text" id="adminName" name="adminName" class="form-control icon-input" placeholder="Enter founder's name" required>
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminPhone" class="form-label">Phone Number</label>
+                        <div class="input-icon-wrapper">
+                            <input type="tel" id="adminPhone" name="adminPhone" class="form-control icon-input" placeholder="Enter phone number" required>
+                            <i class="fas fa-phone input-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-title">Participating Members</div>
+
+                <div id="membersContainer">
+                    <div class="member-card" id="member-template-1">
+                        <div class="member-header">
+                            <h3 class="member-title">Member #1</h3>
+                            <div class="member-actions">
+                                <button type="button" class="action-btn move-btn" title="Change Order">
+                                    <i class="fas fa-grip-lines"></i>
+                                </button>
+                                <button type="button" class="action-btn delete-btn" title="Delete Member">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="member-name-1" class="form-label">Member Name</label>
+                                <div class="input-icon-wrapper">
+                                    <input type="text" id="member-name-1" name="member-name-1" class="form-control icon-input" placeholder="Enter member name" required>
+                                    <i class="fas fa-user input-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="member-phone-1" class="form-label">Phone Number</label>
+                                <div class="input-icon-wrapper">
+                                    <input type="tel" id="member-phone-1" name="member-phone-1" class="form-control icon-input" placeholder="Enter phone number" required>
+                                    <i class="fas fa-phone input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="member-order-1" class="form-label">Payout Order</label>
+                            <div class="input-icon-wrapper">
+                                <select id="member-order-1" name="member-order-1" class="form-control icon-input" required>
+                                    <option value="1" selected>1 - First</option>
+                                </select>
+                                <i class="fas fa-sort-numeric-down input-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="addMemberBtn" class="btn btn-add-member">
+                    <i class="fas fa-plus-circle"></i> Add New Member
+                </button>
+
+                <div class="button-row">
+                    <button type="button" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Create Circle <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">Smart Money Circle</div>
+        <p>&copy; 2025 Smart Budgeters. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('gameayaForm');
+            const membersContainer = document.getElementById('membersContainer');
+            const addMemberBtn = document.getElementById('addMemberBtn');
+            const membersCountInput = document.getElementById('membersCount');
+            const durationInput = document.getElementById('duration');
+       
+            membersCountInput.addEventListener('change', function() {
+                durationInput.value = this.value;
+                updateMemberOrderOptions();
+            });
+            
+            durationInput.addEventListener('change', function() {
+                membersCountInput.value = this.value;
+                updateMemberOrderOptions();
+            });
+
+            let memberCounter = 1; 
+            
+            addMemberBtn.addEventListener('click', function() {
+                memberCounter++;
+                
+                const memberTemplate = document.getElementById('member-template-1');
+                const newMember = memberTemplate.cloneNode(true);
+                newMember.id = `member-template-${memberCounter}`;
+                
+                const title = newMember.querySelector('.member-title');
+                title.textContent = `العضو #${memberCounter}`;
+                
+                const inputs = newMember.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    const oldId = input.id;
+                    const baseName = oldId.substring(0, oldId.lastIndexOf('-'));
+                    input.id = `${baseName}-${memberCounter}`;
+                    input.name = `${baseName}-${memberCounter}`;
+                    
+                    if (input.type !== 'select-one') {
+                        input.value = '';
+                    }
+                    
+                    const label = newMember.querySelector(`label[for="${oldId}"]`);
+                    if (label) {
+                        label.setAttribute('for', input.id);
+                    }
+                });
+                
+                const deleteBtn = newMember.querySelector('.delete-btn');
+                deleteBtn.addEventListener('click', function() {
+                    newMember.remove();
+                    updateMemberOrderOptions();
+                });
+                
+                membersContainer.appendChild(newMember);
+                updateMemberOrderOptions();
+            });
+            
+            function updateMemberOrderOptions() {
+                const count = parseInt(membersCountInput.value) || 1;
+                const memberCards = document.querySelectorAll('.member-card');
+                
+                memberCards.forEach((card, index) => {
+                    const orderSelect = card.querySelector('select[id^="member-order-"]');
+                    const currentValue = orderSelect.value;
+                    
+                    orderSelect.innerHTML = '';
+                    
+                    for (let i = 1; i <= count; i++) {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = `${i} - ${getOrderLabel(i, count)}`;
+                        orderSelect.appendChild(option);
+                    }
+                    
+                    if (currentValue <= count) {
+                        orderSelect.value = currentValue;
+                    }
+                });
+            }
+            
+            function getOrderLabel(position, total) {
+                if (position === 1) return 'First';
+                if (position === 2) return 'Second';
+                if (position === 3) return 'Third';
+                if (position === 4) return 'Fourth';
+                if (position === 5) return 'Fifth';
+                if (position === total) return 'Last';
+                return position.toString();
+            }
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const memberCards = document.querySelectorAll('.member-card');
+                const requiredMembers = parseInt(membersCountInput.value) || 2;
+                
+                if (memberCards.length < requiredMembers) {
+                    alert(`You must add at least ${requiredMembers} members to the circle`);
+                    return;
+                }
+                
+                const orders = new Set();
+                let hasDuplicates = false;
+                
+                memberCards.forEach(card => {
+                    const orderSelect = card.querySelector('select[id^="member-order-"]');
+                    const orderValue = orderSelect.value;
+                    
+                    if (orders.has(orderValue)) {
+                        hasDuplicates = true;
+                    }
+                    
+                    orders.add(orderValue);
+                });
+                
+                if (hasDuplicates) {
+                    alert('The same payout order cannot be assigned to multiple members');
+                    return;
+                }
+                
+                let isValid = true;
+                const requiredFields = form.querySelectorAll('[required]');
+                
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        isValid = false;
+                        field.classList.add('is-invalid');
+                    } else {
+                        field.classList.remove('is-invalid');
+                    }
+                });
+                
+                if (isValid) {
+                    const formData = new FormData(form);
+                    const formDataObj = {};
+                    
+                    formData.forEach((value, key) => {
+                        formDataObj[key] = value;
+                    });
+
+                    const circleData = {
+                        name: formDataObj.gameayaName,
+                        amount: formDataObj.monthlyAmount,
+                        membersCount: formDataObj.membersCount,
+                        duration: formDataObj.duration,
+                        startDate: formDataObj.startDate,
+                        paymentDay: formDataObj.paymentDay,
+                        admin: {
+                            name: formDataObj.adminName,
+                            phone: formDataObj.adminPhone
+                        },
+                        members: []
+                    };
+
+                    memberCards.forEach((card, index) => {
+                        const memberNameInput = card.querySelector('input[id^="member-name-"]');
+                        const memberPhoneInput = card.querySelector('input[id^="member-phone-"]');
+                        const memberOrderSelect = card.querySelector('select[id^="member-order-"]');
+                        
+                        circleData.members.push({
+                            name: memberNameInput.value,
+                            phone: memberPhoneInput.value,
+                            order: memberOrderSelect.value
+                        });
+                    });
+
+                    console.log('Circle data:', circleData);
+                    alert('Money Circle created successfully!');
+
+                    }
+                });
+
+                    const today = new Date();
+                    const formattedDate = today.toISOString().substr(0, 10);
+                    document.getElementById('startDate').value = formattedDate;
+
+                    updateMemberOrderOptions();
+            });
+        </script>
+     <link rel="stylesheet" href="../../../Component/navbar.css">
+     <script src="../../../Component/navbar.js"></script>
+</body>
+</html>
