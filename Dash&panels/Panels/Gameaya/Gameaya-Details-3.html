@@ -369,7 +369,18 @@
                 margin-bottom: 0.5rem;
             }
         }
-    </style>
+    
+/* تأثير bubble عند الـ hover */
+.bubbled ,.highlighted-user{
+    transition: all 0.3s ease;
+}
+
+.bubbled:hover,.highlighted-user:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+</style>
 </head>
 <body>
     <div class="floating-elements">
@@ -386,14 +397,14 @@
     </header>
     
     <div class="main-content">
-        <a href="gameaya-list.html" class="back-button">
+        <a href="gameaya-list.html" class="back-button bubbled">
             <i class="fas fa-arrow-right"></i>
             العودة إلى الجمعيات
         </a>
         
         <!-- إضافة بانر معلومات المستخدم -->
         <div class="glass-card">
-            <div class="user-info-banner">
+            <div class="user-info-banner bubbled">
                 <div class="user-role">
                     <i class="fas fa-user-circle user-icon"></i>
                     <div class="user-role-info">
@@ -408,25 +419,25 @@
             </div>
             
             <div class="gameaya-info">
-                <div class="info-card">
+                <div class="info-card bubbled">
                     <i class="fas fa-coins info-icon"></i>
                     <h3 class="info-title">قيمة القسط الشهري</h3>
                     <div class="info-value">6,000 ج.م</div>
                 </div>
                 
-                <div class="info-card">
+                <div class="info-card bubbled">
                     <i class="fas fa-calendar-alt info-icon"></i>
                     <h3 class="info-title">مدة الجمعية</h3>
                     <div class="info-value">4 شهور</div>
                 </div>
                 
-                <div class="info-card">
+                <div class="info-card bubbled">
                     <i class="fas fa-users info-icon"></i>
                     <h3 class="info-title">عدد الأعضاء</h3>
                     <div class="info-value">4 عضو</div>
                 </div>
                 
-                <div class="info-card">
+                <div class="info-card bubbled">
                     <i class="fas fa-user-shield info-icon"></i>
                     <h3 class="info-title">المنشئ</h3>
                     <div class="info-value">فاطمة الزهراء</div>
@@ -439,7 +450,7 @@
             
             <table class="members-table">
                 <thead>
-                    <tr>
+                    <tr >
                         <th>الاسم</th>
                         <th>رقم الهاتف</th>
                         <th>حالة الدفع</th>
@@ -447,19 +458,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr class="bubbled">
                         <td>فاطمة الزهراء</td>
                         <td>01012345678</td>
                         <td><span class="status-badge paid">تم الدفع</span></td>
                         <td>الشهر الأول (مارس 2025)</td>
                     </tr>
-                    <tr>
+                    <tr class="bubbled">
                         <td>محمد علي</td>
                         <td>01123456789</td>
                         <td><span class="status-badge paid">تم الدفع</span></td>
                         <td>الشهر الثاني (أبريل 2025)</td>
                     </tr>
-                    <tr>
+                    <tr class="bubbled">
                         <td>علي أحمد</td>
                         <td>01234567890</td>
                         <td><span class="status-badge current">الدور الحالي</span></td>
@@ -479,11 +490,11 @@
             <h2 class="section-title">جدول الأدوار</h2>
             
             <div class="schedule-container">
-                <div class="schedule-item">
+                <div class="schedule-item bubbled">
                     <div class="schedule-date">مارس 2025</div>
                     <div class="schedule-member">فاطمة الزهراء</div>
                 </div>
-                <div class="schedule-item">
+                <div class="schedule-item bubbled">
                     <div class="schedule-date">أبريل 2025</div>
                     <div class="schedule-member">محمد علي</div>
                 </div>
