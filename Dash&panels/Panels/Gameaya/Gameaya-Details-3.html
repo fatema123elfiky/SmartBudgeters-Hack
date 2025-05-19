@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Budgeters - تفاصيل جمعية الدراسة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --success: #4ad66d;
+            --warning: #ffb703;
+            --danger: #e63946;
+            --neutral: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        
+        header {
+            padding: 2rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            clip-path: ellipse(100% 100% at 50% 0%);
+            padding-bottom: 8rem;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-left: 1rem;
+            color: var(--accent);
+        }
+        
+        .logo-text {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(to right, white 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 2;
+            margin-top: -5rem;
+            padding: 0 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.7rem 1.5rem;
+            background-color: var(--accent);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(76, 201, 240, 0.2);
+        }
+        
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(76, 201, 240, 0.3);
+        }
+        
+        .back-button i {
+            margin-left: 0.5rem;
+        }
+        
+        .gameaya-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .info-card {
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(76, 201, 240, 0.1) 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .info-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .info-title {
+            color: var(--dark);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent);
+            display: inline-block;
+        }
+        
+        .members-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        .members-table th {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: right;
+        }
+        
+        .members-table tr:nth-child(even) {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        .members-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.35rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .paid {
+            background-color: rgba(74, 214, 109, 0.2);
+            color: var(--success);
+        }
+        
+        .pending {
+            background-color: rgba(255, 183, 3, 0.2);
+            color: var(--warning);
+        }
+        
+        .current {
+            background-color: rgba(76, 201, 240, 0.2);
+            color: var(--primary);
+        }
+        
+        .not-due {
+            background-color: rgba(108, 117, 125, 0.2);
+            color: var(--neutral);
+        }
+        
+        .schedule-container {
+            margin-top: 2rem;
+        }
+        
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .schedule-date {
+            min-width: 100px;
+            padding-left: 1rem;
+            font-weight: 700;
+        }
+        
+        .schedule-member {
+            flex-grow: 1;
+        }
+        
+        .current-turn {
+            background-color: rgba(76, 201, 240, 0.1);
+            border-right: 4px solid var(--accent);
+        }
+        
+        .my-turn {
+            background-color: rgba(74, 214, 109, 0.1);
+            border-right: 4px solid var(--success);
+        }
+        
+        .user-info-banner {
+            background: linear-gradient(135deg, rgba(74, 214, 109, 0.15) 0%, rgba(76, 201, 240, 0.15) 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .user-info-banner .user-role {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info-banner .user-icon {
+            font-size: 2.5rem;
+            margin-left: 1rem;
+            color: var(--success);
+        }
+        
+        .user-info-banner .user-role-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+        
+        .user-info-banner .user-role-info p {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .user-info-banner .payment-status {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            background-color: white;
+            color: var(--dark);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            filter: blur(40px);
+        }
+        
+        .element-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: 10%;
+            right: 5%;
+        }
+        
+        .element-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            bottom: 15%;
+            left: 10%;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .members-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .user-info-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .user-info-banner .user-role {
+                margin-bottom: 1rem;
+                flex-direction: column;
+            }
+            
+            .user-info-banner .user-icon {
+                margin-left: 0;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element element-1"></div>
+        <div class="floating-element element-2"></div>
+    </div>
+    
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-wallet logo-icon"></i>
+            <h1 class="logo-text">Smart Budgeters</h1>
+        </div>
+        <p class="tagline">تفاصيل جمعية الدراسة</p>
+    </header>
+    
+    <div class="main-content">
+        <a href="gameaya-list.html" class="back-button">
+            <i class="fas fa-arrow-right"></i>
+            العودة إلى الجمعيات
+        </a>
+        
+        <!-- إضافة بانر معلومات المستخدم -->
+        <div class="glass-card">
+            <div class="user-info-banner">
+                <div class="user-role">
+                    <i class="fas fa-user-circle user-icon"></i>
+                    <div class="user-role-info">
+                        <h3>مرحباً، سارة أحمد</h3>
+                        <p>دورك في يونيو 2025 (الشهر الرابع)</p>
+                    </div>
+                </div>
+                <div class="payment-status">
+                    <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                    حالة الدفع: تم الدفع
+                </div>
+            </div>
+            
+            <div class="gameaya-info">
+                <div class="info-card">
+                    <i class="fas fa-coins info-icon"></i>
+                    <h3 class="info-title">قيمة القسط الشهري</h3>
+                    <div class="info-value">6,000 ج.م</div>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-calendar-alt info-icon"></i>
+                    <h3 class="info-title">مدة الجمعية</h3>
+                    <div class="info-value">4 شهور</div>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-users info-icon"></i>
+                    <h3 class="info-title">عدد الأعضاء</h3>
+                    <div class="info-value">4 عضو</div>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-user-shield info-icon"></i>
+                    <h3 class="info-title">المنشئ</h3>
+                    <div class="info-value">فاطمة الزهراء</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glass-card">
+            <h2 class="section-title">الأعضاء</h2>
+            
+            <table class="members-table">
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>رقم الهاتف</th>
+                        <th>حالة الدفع</th>
+                        <th>الدور</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>فاطمة الزهراء</td>
+                        <td>01012345678</td>
+                        <td><span class="status-badge paid">تم الدفع</span></td>
+                        <td>الشهر الأول (مارس 2025)</td>
+                    </tr>
+                    <tr>
+                        <td>محمد علي</td>
+                        <td>01123456789</td>
+                        <td><span class="status-badge paid">تم الدفع</span></td>
+                        <td>الشهر الثاني (أبريل 2025)</td>
+                    </tr>
+                    <tr>
+                        <td>علي أحمد</td>
+                        <td>01234567890</td>
+                        <td><span class="status-badge current">الدور الحالي</span></td>
+                        <td>الشهر الثالث (مايو 2025)</td>
+                    </tr>
+                    <tr class="highlighted-user">
+                        <td>سارة أحمد</td>
+                        <td>01122334455</td>
+                        <td><span class="status-badge not-due">لم يحن الدفع</span></td>
+                        <td>الشهر الرابع (يونيو 2025)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="glass-card">
+            <h2 class="section-title">جدول الأدوار</h2>
+            
+            <div class="schedule-container">
+                <div class="schedule-item">
+                    <div class="schedule-date">مارس 2025</div>
+                    <div class="schedule-member">فاطمة الزهراء</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="schedule-date">أبريل 2025</div>
+                    <div class="schedule-member">محمد علي</div>
+                </div>
+                <div class="schedule-item current-turn">
+                    <div class="schedule-date">مايو 2025</div>
+                    <div class="schedule-member">علي أحمد (الدور الحالي)</div>
+                </div>
+                <div class="schedule-item my-turn">
+                    <div class="schedule-date">يونيو 2025</div>
+                    <div class="schedule-member">سارة أحمد (دورك)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-logo">Smart Budgeters</div>
+        <p>جميع الحقوق محفوظة &copy; 2025</p>
+    </footer>
+</body>
+</html>

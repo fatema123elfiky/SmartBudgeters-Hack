@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Budgeters - جمعياتي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --success: #4ad66d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
+        }
+        
+        header {
+            padding: 2rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            clip-path: ellipse(100% 100% at 50% 0%);
+            padding-bottom: 8rem;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-left: 1rem;
+            color: var(--accent);
+        }
+        
+        .logo-text {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(to right, white 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 2;
+            margin-top: -5rem;
+            padding: 0 2rem;
+        }
+        
+        .gameaya-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .gameaya-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .gameaya-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.5);
+        }
+        
+        .gameaya-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .gameaya-btn:hover::before {
+            left: 100%;
+        }
+        
+        .gameaya-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .members-count {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .gameaya-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            filter: blur(40px);
+        }
+        
+        .element-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: 10%;
+            right: 5%;
+        }
+        
+        .element-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            bottom: 15%;
+            left: 10%;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--dark);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 5rem;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .gameaya-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element element-1"></div>
+        <div class="floating-element element-2"></div>
+    </div>
+    
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-wallet logo-icon"></i>
+            <h1 class="logo-text">Smart Budgeters</h1>
+        </div>
+        <p class="tagline">جمعياتي - إدارة الجمعيات بطريقة ذكية وسلسة</p>
+    </header>
+    
+    <div class="main-content">
+        <h2 class="section-title">جمعياتي</h2>
+        
+        <div class="gameaya-grid">
+            <!-- جمعية الأصدقاء -->
+            <a href="#" class="gameaya-btn">
+                <i class="fas fa-users gameaya-icon"></i>
+                <h3 class="gameaya-name">جمعية الأصدقاء</h3>
+                <span class="members-count">عدد الأعضاء: 12</span>
+            </a>
+            
+            <!-- جمعية العائلة -->
+            <a href="#" class="gameaya-btn">
+                <i class="fas fa-home gameaya-icon"></i>
+                <h3 class="gameaya-name">جمعية العائلة</h3>
+                <span class="members-count">عدد الأعضاء: 8</span>
+            </a>
+            
+            <!-- جمعية الدراسة -->
+            <a href="#" class="gameaya-btn">
+                <i class="fas fa-graduation-cap gameaya-icon"></i>
+                <h3 class="gameaya-name">جمعية الدراسة</h3>
+                <span class="members-count">عدد الأعضاء: 4</span>
+            </a>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-logo">Smart Budgeters</div>
+        <p>جميع الحقوق محفوظة &copy; 2025</p>
+    </footer>
+</body>
+</html>
