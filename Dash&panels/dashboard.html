@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Dashboard - Smart Budgeters</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+    
+    :root {
+      --primary: #4361ee;
+      --primary-light: rgba(67, 97, 238, 0.1);
+      --secondary: #3f37c9;
+      --accent: #4cc9f0;
+      --accent-light: rgba(76, 201, 240, 0.1);
+      --dark: #2b2d42;
+      --light: #f8f9fa;
+      --success: #4ad66d;
+      --warning: #f8961e;
+      --danger: #ef233c;
+      --gray: #6c757d;
+      --gray-light: #e9ecef;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+    
+    body {
+      background-color: #f0f2f5;
+      color: var(--dark);
+      min-height: 100vh;
+    }
+    
+    /* Header Styles */
+    header {
+      padding: 2rem 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      clip-path: ellipse(100% 100% at 50% 0%);
+      padding-bottom: 5rem;
+      text-align: center;
+    }
+    
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .logo-icon {
+      font-size: 2.5rem;
+      margin-left: 1rem;
+      color: var(--accent);
+    }
+    
+    .logo-text {
+      font-size: 2.8rem;
+      font-weight: 900;
+      background: linear-gradient(to right, white 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .tagline {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    /* Main Content */
+    .main-content {
+      position: relative;
+      z-index: 2;
+      margin-top: -3rem;
+      padding: 0 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-bottom: 3rem;
+    }
+    
+    /* Dashboard Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+    }
+    
+    /* Card Styles */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .glass-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    .card-title i {
+      color: var(--primary);
+    }
+    
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .card-action-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: var(--gray-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .card-action-btn:hover {
+      background-color: var(--primary-light);
+      color: var(--primary);
+    }
+    
+    /* Summary Cards */
+    .summary-card {
+      grid-column: span 3;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .summary-value {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 1rem 0;
+    }
+    
+    .summary-label {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .summary-change {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+    
+    .summary-change.positive {
+      color: var(--success);
+    }
+    
+    .summary-change.negative {
+      color: var(--danger);
+    }
+    
+    /* Transactions */
+.transactions-card {
+    grid-column: span 4;
+  }
+  
+  .transaction-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensures the content is spaced out */
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  
+  .transaction-item:last-child {
+    border-bottom: none;
+  }
+  
+  .transaction-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1rem;
+    color: white;
+    font-size: 1rem;
+  }
+  
+  .transaction-icon.food {
+    background-color: var(--primary);
+  }
+  
+  .transaction-icon.shopping {
+    background-color: var(--success);
+  }
+  
+  .transaction-icon.transport {
+    background-color: var(--accent);
+  }
+  
+  .transaction-icon.bill {
+    background-color: var(--warning);
+  }
+  
+  .transaction-details {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem; /* Space between icon and text */
+  }
+  
+  .transaction-title {
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  
+  .transaction-category {
+    font-size: 0.8rem;
+    color: var(--gray);
+  }
+  
+  .transaction-amount {
+    font-weight: 700;
+    text-align: right; /* Align amount to the right */
+    width: 100px; /* Set a fixed width to ensure the amount is on the right */
+  }
+  
+  .transaction-amount.income {
+    color: var(--success);
+  }
+  
+  .transaction-amount.expense {
+    color: var(--danger);
+  }
+  
+    
+    /* Budget Progress */
+    .budget-card {
+      grid-column: span 4;
+    }
+    
+    .budget-item {
+      margin-bottom: 1.2rem;
+    }
+    
+    .budget-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    
+    .budget-name {
+      font-weight: 600;
+    }
+    
+    .budget-amount {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background-color: var(--gray-light);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      border-radius: 4px;
+    }
+    
+    .progress-fill.food {
+      width: 75%;
+      background-color: var(--primary);
+    }
+    
+    .progress-fill.transport {
+      width: 45%;
+      background-color: var(--accent);
+    }
+    
+    .progress-fill.entertainment {
+      width: 90%;
+      background-color: var(--danger);
+    }
+    
+    .progress-fill.shopping {
+      width: 30%;
+      background-color: var(--success);
+    }
+    
+    /* Goals Card */
+    .goals-card {
+      grid-column: span 4;
+    }
+    
+    .goal-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--gray-light);
+    }
+    
+    .goal-item:last-child {
+      border-bottom: none;
+    }
+    
+    .goal-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 1rem;
+      color: var(--primary);
+      font-size: 1rem;
+    }
+    
+    .goal-details {
+      flex: 1;
+    }
+    
+    .goal-title {
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+    
+    .goal-description {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-bottom: 0.5rem;
+    }
+    
+    .goal-progress {
+      height: 6px;
+      background-color: var(--gray-light);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    
+    .goal-progress-fill {
+      height: 100%;
+      background-color: var(--primary);
+      border-radius: 3px;
+      width: 65%;
+    }
+    
+    .goal-amount {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    
+    /* Gameya Card */
+    .gameya-card {
+      grid-column: span 6;
+    }
+    
+    .gameya-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .gameya-title {
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+    
+    .gameya-details {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+    
+    .gameya-status {
+      background-color: var(--success-light);
+      color: var(--success);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .gameya-members {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .gameya-member {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: calc(20% - 1rem);
+    }
+    
+    .member-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--gray-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+    
+    .member-paid {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: var(--success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.6rem;
+      border: 2px solid white;
+    }
+    
+    .member-unpaid {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: var(--danger);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.6rem;
+      border: 2px solid white;
+    }
+    
+    .member-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    
+    .member-month {
+      font-size: 0.7rem;
+      color: var(--gray);
+      text-align: center;
+    }
+    
+    /* AI Card */
+    .ai-card {
+      grid-column: span 6;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+    }
+    
+    .ai-card .card-title {
+      color: white;
+    }
+    
+    .ai-suggestion {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .ai-suggestion:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .ai-icon {
+      margin-left: 1rem;
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+    
+    .ai-content {
+      flex: 1;
+    }
+    
+    .ai-text {
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+    
+    .ai-action {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    /* Chatbot Card */
+    .chatbot-card {
+      grid-column: span 6;
+    }
+    
+    .chatbot-container {
+      background-color: var(--gray-light);
+      border-radius: 15px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .chatbot-message {
+      background-color: white;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    
+    .chatbot-message:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      right: 20px;
+      border-width: 10px 10px 0;
+      border-style: solid;
+      border-color: white transparent transparent;
+    }
+    
+    .chatbot-input {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .chatbot-input input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border-radius: 50px;
+      border: none;
+      font-size: 0.9rem;
+    }
+    
+    .chatbot-input button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 0 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .chatbot-input button:hover {
+      background-color: var(--secondary);
+    }
+    
+    /* Tips Card */
+    .tips-card {
+      grid-column: span 6;
+    }
+    
+    .daily-tip {
+      background-color: var(--accent-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
+    /* Floating Elements */
+    .floating-elements {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .floating-element {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.15;
+      filter: blur(40px);
+    }
+    
+    .element-1 {
+      width: 400px;
+      height: 400px;
+      background: var(--primary);
+      top: 10%;
+      right: 5%;
+    }
+    
+    .element-2 {
+      width: 300px;
+      height: 300px;
+      background: var(--accent);
+      bottom: 15%;
+      left: 10%;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 3rem 0;
+      margin-top: 3rem;
+      text-align: center;
+    }
+    
+    .footer-logo {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .summary-card {
+        grid-column: span 6;
+      }
+      
+      .transactions-card,
+      .budget-card,
+      .goals-card {
+        grid-column: span 6;
+      }
+      
+      .gameya-card,
+      .ai-card,
+      .chatbot-card,
+      .tips-card {
+        grid-column: span 12;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .summary-card,
+      .transactions-card,
+      .budget-card,
+      .goals-card,
+      .gameya-card,
+      .ai-card,
+      .chatbot-card,
+      .tips-card {
+        grid-column: span 1;
+      }
+      
+      .gameya-member {
+        width: calc(25% - 1rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-elements">
+    <div class="floating-element element-1"></div>
+    <div class="floating-element element-2"></div>
+  </div>
+  
+  <header>
+    <div class="logo-container">
+      <i class="fas fa-wallet logo-icon"></i>
+      <h1 class="logo-text">Smart Budgeters</h1>
+    </div>
+    <p class="tagline">Your Personal Financial Dashboard</p>
+  </header>
+  
+  <div class="main-content">
+    <div class="dashboard-grid">
+      <!-- Summary Cards -->
+      <div class="glass-card summary-card">
+        <div class="card-header">
+          <h2 class="card-title"><i class="fas fa-wallet"></i> Current Balance</h2>
+          <div class="card-actions">
+            <div class="card-action-btn">
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+        </div>
+        <div class="summary-value">8,750 EGP</div>
+        <div class="summary-label">From your total monthly income of 12,000 EGP</div>
+        <div class="summary-change positive">
+          <i class="fas fa-arrow-up"></i>
+          <span>12% from last month</span>
+        </div>
+      </div>
+      
+      <div class="glass-card summary-card">
+        <div class="card-header">
+          <h2 class="card-title"><i class="fas fa-money-bill-wave"></i> Monthly Expenses</h2>
+          <div class="card-actions">
+            <div class="card-action-btn">
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+        </div>
+        <div class="summary-value">3,250 EGP</div>
+        <div class="summary-label">From your monthly budget of 5,000 EGP</div>
+        <div class="summary-change negative">
+          <i class="fas fa-arrow-down"></i>
+          <span>8% from last month</span>
+        </div>
+      </div>
+      
+      <div class="glass-card summary-card">
+        <div class="card-header">
+          <h2 class="card-title"><i class="fas fa-piggy-bank"></i> Savings</h2>
+          <div class="card-actions">
+            <div class="card-action-btn">
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+        </div>
+        <div class="summary-value">1,500 EGP</div>
+        <div class="summary-label">From your monthly goal of 2,000 EGP</div>
+        <div class="summary-change positive">
+          <i class="fas fa-arrow-up"></i>
+          <span>15% from last month</span>
+        </div>
+      </div>
+      
+      <div class="glass-card summary-card">
+        <div class="card-header">
+          <h2 class="card-title"><i class="fas fa-file-invoice-dollar"></i> Upcoming Bills</h2>
+          <div class="card-actions">
+            <div class="card-action-btn">
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+        </div>
+        <div class="summary-value">1,200 EGP</div>
+        <div class="summary-label">3 bills due in the coming week</div>
+        <div class="summary-change">
+          <span>Similar to last month</span>
+        </div>
+      </div>
+      
+      <!-- Transactions Card -->
+      <div class="glass-card transactions-card">
+        <div class="card-header">
+          <h2 class="card-title"><i class="fas fa-exchange-alt"></i> Recent Transactions</h2>
+          <div class="card-actions">
+            <div class="card-action-btn">
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="card-action-btn">
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="transaction-item">
+          <div class="transaction-amount expense">        -250 EGP</div>
+          <div class="transaction-details">
+            <div class="transaction-title">Pizza Restaurant</div>
+            <div class="transaction-category">Food</div>
+          </div>
+          <div class="transaction-icon food">
+            <i class="fas fa-utensils"></i>
+          </div>
+        </div>
+        
+        <div class="transaction-item">
+          <div class="transaction-amount income">       + 12,000 EGP</div>
+          <div class="transaction-details">
+            <div class="transaction-title">Monthly Salary</div>
+            <div class="transaction-category">Income</div>
+          </div>
+          <div class="transaction-icon">
+            <i class="fas fa-wallet"></i>
+          </div>
+        </div>
+        
+        <div class="transaction-item">
+          <div class="transaction-amount expense">       - 1,200 EGP</div>
+          <div class="transaction-details">
+            <div class="transaction-title">Electricity Bill</div>
+            <div class="transaction-category">Utilities</div>
+          </div>
+          <div class="transaction-icon bill">
+            <i class="fas fa-file-invoice-dollar"></i>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Budget Card -->
+      <div class="glass-card budget-card">
+        <div class="card-header">
+          <h2 class="card-title"><i class="fas fa-chart-pie"></i> Budget Progress</h2>
+          <div class="card-actions">
+            <div class="card-action-btn">
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="budget-item">
+          <div class="budget-header">
+            <div class="budget-name">Food</div>
+            <div class="budget-amount">1,250 EGP / 1,500 EGP</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill food"></div>
+          </div>
+        </div>
+        
+        <div class="budget-item">
+          <div class="budget-header">
+            <div class="budget-name">Transportation</div>
+            <div class="budget-amount">450 EGP / 1,000 EGP</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill transport"></div>
+          </div>
+        </div>
+        
+        <div class="budget-item">
+          <div class="budget-header">
+            <div class="budget-name">Entertainment</div>
+            <div class="budget-amount">900 EGP / 1,000 EGP</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill entertainment"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Goals Card -->
+      <div class="glass-card goals-card">
+        <div class="card-header">
+          <h2 class="card-title"><i class="fas fa-bullseye"></i> Financial Goals</h2>
+          <div class="card-actions">
+            <div class="card-action-btn">
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="card-action-btn">
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="goal-item">
+          <div class="goal-icon">
+            <i class="fas fa-plane"></i>
+          </div>
+          <div class="goal-details">
+            <div class="goal-title">Trip to Sharm El-Sheikh</div>
+            <div class="goal-description">Saving Goal: 5,000 EGP</div>
+            <div class="goal-progress">
+              <div class="goal-progress-fill"></div>
+            </div>
+            <div class="goal-amount">3,250 EGP remaining (65%)</div>
+          </div>
+        </div>
+        
+        <div class="goal-item">
+          <div class="goal-icon">
+            <i class="fas fa-laptop"></i>
+          </div>
+          <div class="goal-details">
+            <div class="goal-title">New Laptop</div>
+            <div class="goal-description">Saving Goal: 15,000 EGP</div>
+            <div class="goal-progress">
+              <div class="goal-progress-fill" style="width: 30%;"></div>
+            </div>
+            <div class="goal-amount">10,500 EGP remaining (70%)</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Gameya Card -->
+      <div class="glass-card gameya-card">
+        <div class="card-header">
+          <h2 class="card-title"><i class="fas fa-users"></i> Your Current Gameya</h2>
+          <div class="card-actions">
+            <div class="card-action-btn">
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="card-action-btn">
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="gameya-header">
+          <div>
+            <div class="gameya-title">FinYology Gameya</div>
+            <div class="gameya-details">1,000 EGP monthly • 10 months</div>
+          </div>
+          <div class="gameya-status">
+            Active
+          </div>
+        </div>
+        
+        <div class="gameya-members">
+          <div class="gameya-member">
+            <div class="member-avatar">
+              <span>M</span>
+              <div class="member-paid">
+                <i class="fas fa-check"></i>
+              </div>
+            </div>
+            <div class="member-name">Malak</div>
+            <div class="member-month">May</div>
+          </div>
+          
+          <div class="gameya-member">
+            <div class="member-avatar">
+              <span>F</span>
+              <div class="member-paid">
+                <i class="fas fa-check"></i>
+              </div>
+            </div>
+            <div class="member-name">Fatema</div>
+            <div class="member-month">Jan</div>
+          </div>
+          
+          <div class="gameya-member">
+            <div class="member-avatar">
+              <span>A</span>
+              <div class="member-unpaid">
+                <i class="fas fa-exclamation"></i>
+              </div>
+            </div>
+            <div class="member-name">Ahmed</div>
+            <div class="member-month">March</div>
+          </div>
+          
+          <div class="gameya-member">
+            <div class="member-avatar">
+              <span>M</span>
+            </div>
+            <div class="member-name">Menna</div>
+            <div class="member-month">April</div>
+          </div>
+          
+          <div class="gameya-member">
+            <div class="member-avatar">
+              <span>M</span>
+            </div>
+            <div class="member-name">Mawada</div>
+            <div class="member-month">May</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- AI Card -->
+      <div class="glass-card ai-card">
+        <div class="card-header">
+          <h2 class="card-title"><i class="fas fa-robot"></i> AI Suggestions</h2>
+          <div class="card-actions">
+            <div class="card-action-btn" style="background-color:rgba(255,255,255,0.2); color:white;">
+              <i class="fas fa-sync-alt"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="ai-suggestion">
+          <div class="ai-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <div class="ai-content">
+            <div class="ai-text">  We noticed you spend 40% of income on food. You could save ~500 EGP/month by reducing restaurant visits.</div>
+            <div class="ai-action">View Savings Plan</div>
+          </div>
+        </div>
+        
+        <div class="ai-suggestion">
+          <div class="ai-icon">
+            <i class="fas fa-coins"></i>
+          </div>
+          <div class="ai-content">
+            <div class="ai-text">  Based on your income, we recommend 50% for needs, 30% for wants, and 20% for savings.</div>
+            <div class="ai-action">Apply This Plan</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Chatbot Card -->
+      <div class="glass-card chatbot-card">
+        <div class="card-header">
+          <h2 class="card-title"><i class="fas fa-comments"></i> Financial Assistant</h2>
+          <div class="card-actions">
+            <div class="card-action-btn">
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="chatbot-container">
+          <div class="chatbot-message">
+            🤖 Hello! How can I help with your finances today?
+          </div>
+          
+          <div class="chatbot-input">
+            <input type="text" placeholder="Ask about saving or budgeting...">
+            <button><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Tips Card -->
+      <div class="glass-card tips-card">
+        <div class="card-header">
+          <h2 class="card-title"><i class="fas fa-lightbulb"></i> Daily Tip</h2>
+          <div class="card-actions">
+            <div class="card-action-btn">
+              <i class="fas fa-redo"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="daily-tip">
+          "Track every purchase today, even small ones. Awareness is the first step to financial control."
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="footer-logo">Smart Budgeters</div>
+    <p>All rights reserved &copy; 2023</p>
+  </footer>
+
+  <script>
+    // Interactive elements
+    document.querySelectorAll('.ai-action').forEach(action => {
+      action.addEventListener('click', () => {
+        alert('You will be redirected to the suggested financial plan');
+      });
+    });
+    
+    document.querySelector('.chatbot-input button').addEventListener('click', () => {
+      const input = document.querySelector('.chatbot-input input');
+      const message = document.querySelector('.chatbot-message');
+      
+      if (input.value.toLowerCase().includes('budget')) {
+        message.textContent = "🧠 Tip: Allocate 50% for needs, 30% for wants, 20% for savings.";
+      } else if (input.value.toLowerCase().includes('save')) {
+        message.textContent = "💰 Tip: Automate 20% of income to savings when paid.";
+      } else {
+        message.textContent = "🤖 I can help with budgeting, saving, or investing. Ask me anything!";
+      }
+      
+      input.value = '';
+    });
+  </script>
+</body>
+</html>

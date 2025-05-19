@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Budgeters - Common Questions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --success: #4ad66d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
+        }
+        
+        header {
+            padding: 2rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            clip-path: ellipse(100% 100% at 50% 0%);
+            padding-bottom: 8rem;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-left: 1rem;
+            color: var(--accent);
+        }
+        
+        .logo-text {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(to right, white 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 2;
+            margin-top: -5rem;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin-right: auto;
+            margin-left: auto;
+            width: 100%;
+        }
+        
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+        
+        .faq-item {
+            composes: glass-card;
+            cursor: pointer;
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding-top 0.3s ease;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding-top: 1.5rem;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .contact-card {
+            composes: glass-card;
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2.5rem;
+        }
+        
+        .contact-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .contact-desc {
+            color: #6c757d;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .contact-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+            cursor: pointer;
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            filter: blur(40px);
+        }
+        
+        .element-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: 10%;
+            right: 5%;
+        }
+        
+        .element-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            bottom: 15%;
+            left: 10%;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 5rem;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        /* Chat Box Styles */
+        .qa-chat-box {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 350px;
+            display: none;
+            flex-direction: column;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .qa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+        
+        .qa-header span {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .close-chat {
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .close-chat:hover {
+            transform: scale(1.1);
+        }
+        
+        .qa-body {
+            padding: 20px;
+            height: 250px;
+            overflow-y: auto;
+        }
+        
+        .qa-body p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .qa-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #e6e6e6;
+        }
+        
+        .qa-input input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            direction: rtl;
+        }
+        
+        .qa-input button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .qa-input button:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .faq-question {
+                font-size: 1.1rem;
+            }
+            
+            .qa-chat-box {
+                width: 300px;
+                bottom: 20px;
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element element-1"></div>
+        <div class="floating-element element-2"></div>
+    </div>
+    
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-wallet logo-icon"></i>
+            <h1 class="logo-text"> Smart Budgeters</h1>
+        </div>
+        <p class="tagline">Answers to Your Common Questions</p>
+    </header>
+    
+    <div class="main-content">
+        <h2 class="page-title">Frequently Asked Questions</h2>
+        
+        <div class="faq-container">
+            
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is your app safe for linking bank accounts?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, we use advanced encryption technologies to protect your data. All communications between our app and the banks are done through secure and encrypted channels. We also do not store any bank login credentials on our servers.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How does the smart financial assistant work?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>The smart financial assistant analyzes your spending patterns and compares them with similar users. Based on these analyses, it provides personalized tips to save money, optimize spending, and increase your savings. The assistant learns from your habits over time to give more accurate suggestions.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What is the cost of using the app?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>The app is free to use with basic features. Premium features are available through a monthly subscription. You can use all essential tracking and analysis tools at no cost. Premium access includes advanced reports, a personal financial assistant, and long-term financial planning tools.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How can I export my financial data?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You can export your data anytime in CSV or Excel format. Go to Account Settings and select "Export Data". You can choose the time period and data types to export. The export process takes a few minutes depending on the data volume.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Does the app support multiple currencies?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, the app supports more than 50 global currencies. You can change the default currency from your account settings. The app also automatically converts values when adding transactions in different currencies based on current exchange rates.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-card">
+            <h3 class="contact-title">Didn't find your answer?</h3>
+            <p class="contact-desc">You can</p>
+            <a href="javascript:void(0)" class="contact-btn" id="openChatBtn">
+                <i class="fas fa-headset"></i> Contact Us
+            </a>
+        </div>
+    </div>
+    
+    <!-- Q&A Chat Box -->
+    <div class="qa-chat-box" id="qaChatBox">
+        <div class="qa-header">
+            <span>Ask Us a Question</span>
+            <i class="fas fa-times close-chat" id="closeChat"></i>
+        </div>
+        <div class="qa-body">
+            <p>Hello! How can we assist you today?</p>
+            
+        </div>
+        <div class="qa-input">
+            <input type="text" placeholder="Type your question..." />
+            <button><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-logo">Smart Budgeters</div>
+        <p>All rights reserved &copy; 2023</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        const chatBox = document.getElementById('qaChatBox');
+        const openBtn = document.getElementById('openChatBtn');
+        const closeBtn = document.getElementById('closeChat');
+        
+        openBtn.addEventListener('click', () => {
+            chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            chatBox.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
