@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
                 <li><a href="budget.html">Set Budget 💵</a></li>
                 <li><a href="budget.html">Track Expenses 📊</a></li>
-                <li><a href="Entry-Page.html">More🏦</a></li>
+                <li><a href="index.html">More🏦</a></li>
             </ul>
         </div>
     </nav>
