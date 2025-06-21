@@ -251,6 +251,7 @@
             bottom: 30px;
             left: 30px;
             width: 350px;
+            height:500px;
             display: none;
             flex-direction: column;
             background: white;
@@ -350,7 +351,15 @@
                 left: 20px;
             }
         }
+        .qa-chat-box iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        }
+        
+    
     </style>
+    
 </head>
 <body>
      <div id="navbar-placeholder"></div>
@@ -435,20 +444,23 @@
     
     <!-- Q&A Chat Box -->
     <div class="qa-chat-box" id="qaChatBox">
+        
         <div class="qa-header">
-            <span>Ask Us a Question</span>
+            <span>Talk to hakeem floos</span>
             <i class="fas fa-times close-chat" id="closeChat"></i>
         </div>
-        <div class="qa-body">
+         <iframe src="https://cdn.botpress.cloud/webchat/v3.0/shareable.html?configUrl=https://files.bpcontent.cloud/2025/06/19/13/20250619130638-ASSGBP6I.json" frameborder="0"></iframe>
+     
+       <!-- <div class="qa-body">
             <p>Hello! How can we assist you today?</p>
             
         </div>
         <div class="qa-input">
             <input type="text" placeholder="Type your question..." />
             <button><i class="fas fa-paper-plane"></i></button>
-        </div>
+        </div>-->
     </div>
-    
+   
     <footer>
         <div class="footer-logo">Smart Budgeters</div>
         <p>All rights reserved &copy; 2023</p>
@@ -477,7 +489,62 @@
         closeBtn.addEventListener('click', () => {
             chatBox.style.display = 'none';
         });
-    </script>
+    
+    const chatBody = document.querySelector('.qa-body');
+    const inputField = document.querySelector('.qa-input input');
+    const sendBtn = document.querySelector('.qa-input button');
+
+    const responses = {
+        "hello": "Hello! I'm Hakeem Floos. How can I help you today?",
+        "cost": "Our basic version is free! For more features, you can check our premium plans.",
+        "safe": "Yes, we use bank-level encryption to keep your data secure.",
+        "currency": "Yes, we support 50+ currencies worldwide.",
+        "export": "Go to Settings > Export Data to download your info as CSV or Excel.",
+        "analysis":"you can get a detailed report from the report generator , that will be more helpful",
+        "help": "You can ask me anything about budgeting, spending habits, or using the app!",
+        "use":"you can navigate through the dashboard or navbar , our common features are as follows:\n 1. track your expense and see more",
+        "budget":"I can help you to manage your budget professionally",
+        "default": "Hmm, I’m still learning that. Try rephrasing your question!"
+    };
+
+    function addMessage(content, type = "user") {
+        const p = document.createElement('p');
+        p.innerText = content;
+        p.style.textAlign = type === "user" ? "right" : "left";
+        p.style.background = type === "user" ? "#e6f4ff" : "#f1f1f1";
+        p.style.borderRadius = "15px";
+        p.style.padding = "10px";
+        p.style.margin = "5px 0";
+        chatBody.appendChild(p);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function getBotResponse(msg) {
+        msg = msg.toLowerCase();
+        for (let key in responses) {
+            if (msg.includes(key)) return responses[key];
+        }
+        return responses["default"];
+    }
+
+    sendBtn.addEventListener('click', () => {
+        const userMsg = inputField.value.trim();
+        if (!userMsg) return;
+
+        addMessage(userMsg, "user");
+        inputField.value = "";
+
+        setTimeout(() => {
+            const reply = getBotResponse(userMsg);
+            addMessage(`Hakeem Floos: ${reply}`, "bot");
+        }, 800); // Delay to simulate thinking
+    });
+
+    inputField.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") sendBtn.click();
+    });
+</script>
+
     <link rel="stylesheet" href="navbardetails/navbar.css">
   <script src="navbardetails/navbar.js"></script>
 </body>
