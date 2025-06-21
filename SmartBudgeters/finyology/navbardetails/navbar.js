@@ -24,11 +24,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         <li><a href="activity.html">Activities🧩</a></li>
                     </ul>
                 </li>
-                <li><a href="budget.html">Set Income 💵</a></li>
+                <li><a href="budget.html">Set Income & budget 💵</a></li>
         
-                <li><a href="budget.html">Set Budget 💵</a></li>
-                <li><a href="budget.html">Track Expenses 📊</a></li>
-                <li><a href="index.html">More🏦</a></li>
+                <li><a href="trackExpense.html">Track Expenses 📊</a></li>
+                <li><a href="analysisforspendingpatterns.html">Spending analysis 📈</a></li>
+                
             </ul>
         </div>
     </nav>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Budgeters - Spending Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --success: #4ad66d;
+            --warning: #ffbe0b;
+            --danger: #ff5a5f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Navbar Styles */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .navbar-logo {
+            font-size: 1.8rem;
+            margin-right: 0.8rem;
+            color: var(--accent);
+        }
+        
+        .navbar-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .navbar-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .nav-link i {
+            font-size: 1.1rem;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        header {
+            padding: 2rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            clip-path: ellipse(100% 100% at 50% 0%);
+            padding-bottom: 6rem;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            color: var(--accent);
+        }
+        
+        .logo-text {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(to right, white 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 2;
+            margin-top: -5rem;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            padding-bottom: 3rem;
+        }
+        
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(67, 97, 238, 0.1);
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(76, 201, 240, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 201, 240, 0.5);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--dark);
+            border: 2px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(76, 201, 240, 0.1);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(76, 201, 240, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 201, 240, 0.2);
+        }
+        
+        .time-period-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .time-period-btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .chart-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .insights-container {
+            margin-top: 2rem;
+        }
+        
+        .insight-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .insight-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .insight-content {
+            line-height: 1.6;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            filter: blur(40px);
+        }
+        
+        .element-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: 10%;
+            right: 5%;
+        }
+        
+        .element-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            bottom: 15%;
+            left: 10%;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .navbar-links {
+                width: 100%;
+                justify-content: space-around;
+            }
+            
+            .logo-text {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .time-period-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .time-period-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+     <div id="navbar-placeholder"></div>
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-wallet logo-icon"></i>
+            <h1 class="logo-text">Smart Budgeters</h1>
+        </div>
+        <p class="tagline">Understand your spending patterns</p>
+    </header>
+    
+    <div class="main-content">
+        <h1 class="page-title">Spending Analysis</h1>
+        
+        <!-- Time Period Selector -->
+        <div class="glass-card">
+            <h2 class="section-title">Select Time Period</h2>
+            <div class="time-period-selector">
+                <button class="btn btn-primary time-period-btn" id="last3months-btn">
+                    <i class="fas fa-calendar-week"></i> Last 3 Months
+                </button>
+                <button class="btn btn-secondary time-period-btn" id="alltime-btn">
+                    <i class="fas fa-calendar-alt"></i> All Time
+                </button>
+            </div>
+        </div>
+        
+        <!-- Analysis Content (Initially Hidden) -->
+        <div id="analysis-content" style="display: none;">
+            <!-- Charts Section -->
+            <div class="glass-card">
+                <h2 class="section-title">Spending Visualization</h2>
+                <div class="chart-container">
+                    <div class="chart-card">
+                        <h3 class="chart-title"><i class="fas fa-chart-pie"></i> Spending by Category</h3>
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-title"><i class="fas fa-chart-bar"></i> Monthly Spending Trend</h3>
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Insights Section -->
+            <div class="glass-card insights-container">
+                <h2 class="section-title">Spending Insights</h2>
+                
+                <div class="insight-card">
+                    <h3 class="insight-title"><i class="fas fa-lightbulb"></i> Top Spending Category</h3>
+                    <div class="insight-content" id="top-category-insight">
+                        Loading insights...
+                    </div>
+                </div>
+                
+                <div class="insight-card">
+                    <h3 class="insight-title"><i class="fas fa-chart-line"></i> Spending Trend</h3>
+                    <div class="insight-content" id="trend-insight">
+                        Loading insights...
+                    </div>
+                </div>
+                
+                <div class="insight-card">
+                    <h3 class="insight-title"><i class="fas fa-piggy-bank"></i> Savings Opportunity</h3>
+                    <div class="insight-content" id="savings-insight">
+                        Loading insights...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-logo">Smart Budgeters</div>
+        <p>&copy; 2025 Smart Budgeters. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Sample data for demonstration
+        const spendingData = {
+            last3months: {
+                categories: {
+                    'Housing': 1800,
+                    'Food': 900,
+                    'Transportation': 450,
+                    'Entertainment': 600,
+                    'Utilities': 350,
+                    'Healthcare': 200,
+                    'Other': 300
+                },
+                monthlyTrend: [
+                    { month: 'Jan', total: 1200 },
+                    { month: 'Feb', total: 1500 },
+                    { month: 'Mar', total: 1800 }
+                ]
+            },
+            alltime: {
+                categories: {
+                    'Housing': 7200,
+                    'Food': 3600,
+                    'Transportation': 1800,
+                    'Entertainment': 2400,
+                    'Utilities': 1400,
+                    'Healthcare': 800,
+                    'Other': 1200
+                },
+                monthlyTrend: [
+                    { month: 'Jan', total: 1200 },
+                    { month: 'Feb', total: 1500 },
+                    { month: 'Mar', total: 1800 },
+                    { month: 'Apr', total: 1600 },
+                    { month: 'May', total: 1400 },
+                    { month: 'Jun', total: 1700 },
+                    { month: 'Jul', total: 1900 },
+                    { month: 'Aug', total: 2100 },
+                    { month: 'Sep', total: 1800 },
+                    { month: 'Oct', total: 1600 },
+                    { month: 'Nov', total: 1400 },
+                    { month: 'Dec', total: 2000 }
+                ]
+            }
+        };
+
+        // DOM Elements
+        const last3monthsBtn = document.getElementById('last3months-btn');
+        const alltimeBtn = document.getElementById('alltime-btn');
+        const analysisContent = document.getElementById('analysis-content');
+        const pieChartCtx = document.getElementById('pieChart').getContext('2d');
+        const barChartCtx = document.getElementById('barChart').getContext('2d');
+        const topCategoryInsight = document.getElementById('top-category-insight');
+        const trendInsight = document.getElementById('trend-insight');
+        const savingsInsight = document.getElementById('savings-insight');
+
+        // Chart instances
+        let pieChart, barChart;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default to last 3 months
+            last3monthsBtn.classList.add('active');
+            analyzeSpending('last3months');
+        });
+
+        // Event listeners for time period buttons
+        last3monthsBtn.addEventListener('click', function() {
+            last3monthsBtn.classList.add('active');
+            alltimeBtn.classList.remove('active');
+            analyzeSpending('last3months');
+        });
+
+        alltimeBtn.addEventListener('click', function() {
+            alltimeBtn.classList.add('active');
+            last3monthsBtn.classList.remove('active');
+            analyzeSpending('alltime');
+        });
+
+        // Main analysis function
+        function analyzeSpending(timePeriod) {
+            // Show the analysis content
+            analysisContent.style.display = 'block';
+            
+            // Get the relevant data
+            const data = spendingData[timePeriod];
+            const categories = data.categories;
+            const monthlyTrend = data.monthlyTrend;
+            
+            // Destroy existing charts if they exist
+            if (pieChart) pieChart.destroy();
+            if (barChart) barChart.destroy();
+            
+            // Create pie chart
+            createPieChart(categories);
+            
+            // Create bar chart
+            createBarChart(monthlyTrend);
+            
+            // Generate insights
+            generateInsights(categories, monthlyTrend, timePeriod);
+        }
+
+        // Create pie chart function
+        function createPieChart(categories) {
+            const labels = Object.keys(categories);
+            const data = Object.values(categories);
+            const backgroundColors = [
+                '#4361ee', '#3f37c9', '#4cc9f0', '#4ad66d', 
+                '#ffbe0b', '#ff5a5f', '#7209b7', '#f72585'
+            ];
+
+            pieChart = new Chart(pieChartCtx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: $${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create bar chart function
+        function createBarChart(monthlyTrend) {
+            const labels = monthlyTrend.map(item => item.month);
+            const data = monthlyTrend.map(item => item.total);
+
+            barChart = new Chart(barChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Monthly Spending',
+                        data: data,
+                        backgroundColor: '#4361ee',
+                        borderColor: '#3f37c9',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Amount ($)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `$${context.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Generate insights function
+        function generateInsights(categories, monthlyTrend, timePeriod) {
+            // Calculate total spending
+            const totalSpending = Object.values(categories).reduce((sum, amount) => sum + amount, 0);
+            
+            // Find top category
+            let topCategory = '';
+            let topAmount = 0;
+            for (const [category, amount] of Object.entries(categories)) {
+                if (amount > topAmount) {
+                    topAmount = amount;
+                    topCategory = category;
+                }
+            }
+            const topPercentage = Math.round((topAmount / totalSpending) * 100);
+            
+            // Calculate spending trend
+            const trendData = monthlyTrend.map(item => item.total);
+            const firstMonth = monthlyTrend[0].total;
+            const lastMonth = monthlyTrend[monthlyTrend.length - 1].total;
+            const trendDirection = lastMonth > firstMonth ? 'increased' : 'decreased';
+            const trendPercentage = Math.round(Math.abs(lastMonth - firstMonth) / firstMonth * 100);
+            
+            // Find potential savings category (highest non-essential)
+            const nonEssentialCategories = ['Entertainment', 'Dining Out', 'Shopping'];
+            let savingsCategory = '';
+            let savingsAmount = 0;
+            for (const [category, amount] of Object.entries(categories)) {
+                if (nonEssentialCategories.includes(category) && amount > savingsAmount) {
+                    savingsAmount = amount;
+                    savingsCategory = category;
+                }
+            }
+            const savingsPercentage = Math.round((savingsAmount / totalSpending) * 100);
+            
+            // Update insight texts
+            topCategoryInsight.innerHTML = `
+                Your top spending category is <strong>${topCategory}</strong>, accounting for 
+                <strong>$${topAmount}</strong> (${topPercentage}%) of your total spending. 
+                ${topPercentage > 30 ? 'This seems quite high - consider reviewing expenses in this category.' : ''}
+            `;
+            
+            trendInsight.innerHTML = `
+                Your spending has <strong>${trendDirection} by ${trendPercentage}%</strong> 
+                ${timePeriod === 'last3months' ? 'over the last 3 months' : 'this year'}. 
+                ${trendDirection === 'increased' ? 'You might want to review what caused this increase.' : 'Great job managing your expenses!'}
+            `;
+            
+            savingsInsight.innerHTML = savingsCategory ? `
+                You spent <strong>$${savingsAmount}</strong> on <strong>${savingsCategory}</strong> 
+                (${savingsPercentage}% of total). Consider setting a budget limit for this category 
+                to increase your savings potential.
+            ` : `
+                Your spending is well distributed across essential categories. Great job maintaining 
+                balanced finances!
+            `;
+        }
+    </script>
+       <link rel="stylesheet" href="navbardetails/navbar.css">
+  <script src="navbardetails/navbar.js"></script>
+</body>
+</html>

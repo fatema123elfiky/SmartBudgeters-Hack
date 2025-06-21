@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Budgeters - Expense Tracker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+    body {
+      font-family: 'Tajawal', sans-serif;
+      margin: 0;
+      background-color: #f0f2f5;
+      color: #2b2d42;
+    }
+    header {
+      background: linear-gradient(135deg, #4361ee 0%, #3f37c9 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --success: #4ad66d;
+        }
+    .logo-text {
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(to right, white 0%, #4cc9f0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .tagline {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    .main-content {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-bottom: 2px solid #4cc9f0;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .info-card {
+      display: inline-block;
+      width: 30%;
+      margin-right: 3%;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 10px;
+      background-color: #f8f9fa;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .info-value {
+      font-size: 1.8rem;
+      color: #4361ee;
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 0.8rem;
+      border-bottom: 1px solid #ddd;
+      text-align: right;
+    }
+    th {
+      background-color: #4361ee;
+      color: white;
+    }
+    .status-badge {
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+    .paid {
+      background-color: #d4edda;
+      color: #28a745;
+    }
+    .pending {
+      background-color: #fff3cd;
+      color: #ffc107;
+    }
+    footer {
+      text-align: center;
+      background: #2b2d42;
+      color: white;
+      padding: 1.5rem 0;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+  <header>
+    <h1 class="logo-text">Smart Budgeters</h1>
+    <p class="tagline">Your Expense Tracking Dashboard</p>
+  </header>
+
+  <div class="main-content">
+    <div class="glass-card">
+      <h2 class="section-title">Overview</h2>
+      <div class="info-card">
+        <div>Total Budget</div>
+        <div class="info-value">6,000 EGP</div>
+      </div>
+      <div class="info-card">
+        <div>Spent So Far</div>
+        <div class="info-value">4,200 EGP</div>
+      </div>
+      <div class="info-card">
+        <div>Remaining</div>
+        <div class="info-value">1,800 EGP</div>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <h2 class="section-title">Expense Breakdown</h2>
+      <canvas id="progressLineChart" height="100"></canvas>
+    </div>
+
+    <div class="glass-card">
+      <h2 class="section-title">Detailed Expenses</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Spent</th>
+            <th>Budget</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Food</td>
+            <td>1,200 EGP</td>
+            <td>1,500 EGP</td>
+            <td><span class="status-badge paid">On Track</span></td>
+          </tr>
+          <tr>
+            <td>Transport</td>
+            <td>500 EGP</td>
+            <td>600 EGP</td>
+            <td><span class="status-badge paid">On Track</span></td>
+          </tr>
+          <tr>
+            <td>Entertainment</td>
+            <td>800 EGP</td>
+            <td>700 EGP</td>
+            <td><span class="status-badge pending">Over Budget</span></td>
+          </tr>
+          <tr>
+            <td>Utilities</td>
+            <td>700 EGP</td>
+            <td>1,000 EGP</td>
+            <td><span class="status-badge paid">On Track</span></td>
+          </tr>
+          <tr>
+            <td>Fees of School</td>
+            <td>1,000 EGP</td>
+            <td>2,000 EGP</td>
+            <td><span class="status-badge paid">On Track</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Smart Budgeters</p>
+  </footer>
+
+  <script>
+    const ctx = document.getElementById('progressLineChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Food', 'Transport', 'Entertainment', 'Utilities'],
+        datasets: [
+          {
+            label: 'Budget',
+            data: [1500, 600, 700, 1000],
+            borderColor: '#4cc9f0',
+            fill: false,
+            tension: 0.4
+          },
+          {
+            label: 'Spent',
+            data: [1200, 500, 800, 700],
+            borderColor: '#e63946',
+            fill: false,
+            tension: 0.4
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Amount (EGP)' }
+          }
+        }
+      }
+    });
+  </script>
+     <link rel="stylesheet" href="navbardetails/navbar.css">
+     <script src="navbardetails/navbar.js"></script>
+</body>
+</html>
