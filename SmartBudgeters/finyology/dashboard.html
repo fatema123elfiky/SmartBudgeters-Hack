@@ -87,6 +87,8 @@
       padding-bottom: 3rem;
     }
     
+    
+    
     /* Dashboard Grid */
     .dashboard-grid {
       display: grid;
@@ -156,7 +158,7 @@
     
     /* Summary Cards */
     .summary-card {
-      grid-column: span 3;
+      grid-column: span 4;
       display: flex;
       flex-direction: column;
     }
@@ -540,7 +542,7 @@
     .chatbot-container {
       background-color: var(--gray-light);
       border-radius: 15px;
-      padding: 1rem;
+      padding: 0.4rem;
       margin-top: 1rem;
     }
     
@@ -593,18 +595,57 @@
     /* Tips Card */
     .tips-card {
       grid-column: span 6;
+      
     }
     
     .daily-tip {
-      background-color: var(--accent-light);
+     
       border-radius: 15px;
-      padding: 1.5rem;
-      margin-top: 1rem;
+      
+      margin-top: 1.5rem;
       text-align: center;
       font-size: 1.1rem;
       font-weight: 500;
       color: var(--dark);
+      font-style: italic;
+      background-color: var(--light);
+      padding: 1.5rem;
+      border-left: 5px solid var(--primary);
+      margin: 5rem 0;
+      border-radius: 10px;
     }
+   
+
+   
+
+    .tip-input-container {
+      display: flex;
+      
+      margin-bottom: 0.1rem;
+      margin-top:1.5rem;
+    }
+
+    .tip-input-container input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .tip-input-container button {
+      padding: 10px 15px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .tip-input-container button:hover {
+      background-color: var(--secondary);
+    }
+
     
     /* Floating Elements */
     .floating-elements {
@@ -696,6 +737,13 @@
         width: calc(25% - 1rem);
       }
     }
+    .chatbot-container iframe {
+  width: 100%;
+  height: 300px; /* You can adjust this height as needed */
+  border: none;
+  border-radius: 10px;
+}
+    
   </style>
 </head>
 <body>
@@ -748,6 +796,45 @@
           </div>
         </div>
         <div class="summary-value">3,250 EGP</div>
+        
+        <!--<div class="card-header">
+          <h2 class="card-title"><i class="fas fa-chart-pie"></i> Budget Progress</h2>
+          <div class="card-actions">
+            <div class="card-action-btn">
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+        </div>-->
+        
+        <div class="budget-item">
+          <div class="budget-header">
+            <div class="budget-name">Food</div>
+            <div class="budget-amount">1,250 EGP / 1,500 EGP</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill food"></div>
+          </div>
+        </div>
+        
+        <div class="budget-item">
+          <div class="budget-header">
+            <div class="budget-name">Transportation</div>
+            <div class="budget-amount">450 EGP / 1,000 EGP</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill transport"></div>
+          </div>
+        </div>
+        
+        <div class="budget-item">
+          <div class="budget-header">
+            <div class="budget-name">Entertainment</div>
+            <div class="budget-amount">900 EGP / 1,000 EGP</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill entertainment"></div>
+          </div>
+        </div>
         <div class="summary-label">From your monthly budget of 5,000 EGP</div>
         <div class="summary-change negative">
           <i class="fas fa-arrow-down"></i>
@@ -837,46 +924,9 @@
       </div>
       
       <!-- Budget Card -->
-      <div class="glass-card budget-card">
-        <div class="card-header">
-          <h2 class="card-title"><i class="fas fa-chart-pie"></i> Budget Progress</h2>
-          <div class="card-actions">
-            <!--<div class="card-action-btn">
-              <i class="fas fa-ellipsis-h"></i>
-            </div>-->
-          </div>
-        </div>
+     <!--- <div class="glass-card budget-card">
         
-        <div class="budget-item">
-          <div class="budget-header">
-            <div class="budget-name">Food</div>
-            <div class="budget-amount">1,250 EGP / 1,500 EGP</div>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill food"></div>
-          </div>
-        </div>
-        
-        <div class="budget-item">
-          <div class="budget-header">
-            <div class="budget-name">Transportation</div>
-            <div class="budget-amount">450 EGP / 1,000 EGP</div>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill transport"></div>
-          </div>
-        </div>
-        
-        <div class="budget-item">
-          <div class="budget-header">
-            <div class="budget-name">Entertainment</div>
-            <div class="budget-amount">900 EGP / 1,000 EGP</div>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill entertainment"></div>
-          </div>
-        </div>
-      </div>
+      </div>-->
       
       <!-- Goals Card -->
       <div class="glass-card goals-card">
@@ -922,7 +972,7 @@
       </div>
       
       <!-- Gameya Card -->
-      <div class="glass-card gameya-card">
+      <div class="glass-card gameya-card" onclick = 'window.location.href="Gameaya-Details-3.html"'style="cursor: pointer;">
         <div class="card-header">
           <h2 class="card-title"><i class="fas fa-users"></i> Your Current Gameya</h2>
           <div class="card-actions">
@@ -937,7 +987,7 @@
         
         <div class="gameya-header">
           <div>
-            <div class="gameya-title">FinYology Gameya</div>
+            <div class="gameya-title">Uni Gameya</div>
             <div class="gameya-details">1,000 EGP monthly • 10 months</div>
           </div>
           <div class="gameya-status">
@@ -1002,9 +1052,9 @@
         <div class="card-header">
           <h2 class="card-title"><i class="fas fa-robot"></i> AI Suggestions</h2>
           <div class="card-actions">
-            <div class="card-action-btn" style="background-color:rgba(255,255,255,0.2); color:white;">
+           <!-- <div class="card-action-btn" style="background-color:rgba(255,255,255,0.2); color:white;">
               <i class="fas fa-sync-alt"></i>
-            </div>
+            </div>-->
           </div>
         </div>
         
@@ -1030,9 +1080,9 @@
       </div>
       
       <!-- Chatbot Card -->
-      <div class="glass-card chatbot-card">
+     <div class="glass-card chatbot-card">
         <div class="card-header">
-          <h2 class="card-title"><i class="fas fa-comments"></i> Financial Assistant</h2>
+          <h2 class="card-title"><i class="fas fa-comments"></i>Hakeem floos 🤖</h2>
           <div class="card-actions">
             <div class="card-action-btn">
               <i class="fas fa-ellipsis-h"></i>
@@ -1041,15 +1091,18 @@
         </div>
         
         <div class="chatbot-container">
-          <div class="chatbot-message">
-            🤖 Hello! How can I help with your finances today?
+         <!-- <div class="chatbot-message">
+             Hello! How can I help with your finances today?
           </div>
           
           <div class="chatbot-input">
             <input type="text" placeholder="Ask about saving or budgeting...">
             <button><i class="fas fa-paper-plane"></i></button>
-          </div>
+          </div>-->
+            <iframe src="https://cdn.botpress.cloud/webchat/v3.0/shareable.html?configUrl=https://files.bpcontent.cloud/2025/06/19/13/20250619130638-ASSGBP6I.json" frameborder="0"></iframe>
+     
         </div>
+
       </div>
       
       <!-- Tips Card -->
@@ -1057,15 +1110,21 @@
         <div class="card-header">
           <h2 class="card-title"><i class="fas fa-lightbulb"></i> Daily Tip</h2>
           <div class="card-actions">
-            <div class="card-action-btn">
+           <!--<div class="card-action-btn">
               <i class="fas fa-redo"></i>
-            </div>
+            </div>-->
           </div>
         </div>
         
-        <div class="daily-tip">
-          "Track every purchase today, even small ones. Awareness is the first step to financial control."
+        <div class="daily-tip" id="dailyTip">
+       "Track every purchase today, even small ones. Awareness is the first step to financial control."
         </div>
+
+        <div class="tip-input-container">
+          <input type="text" id="userTipInput" placeholder="Write your financial tip..." />
+          <button onclick="updateTip()">Set Tip</button>
+        </div>
+
       </div>
     </div>
   </div>
@@ -1097,6 +1156,17 @@
       
       input.value = '';
     });
+      function updateTip() {
+    const userInput = document.getElementById("userTipInput").value.trim();
+    const tipBox = document.getElementById("dailyTip");
+
+    if (userInput !== "") {
+      tipBox.textContent = `"${userInput}"`;
+    } else {
+      alert("Please enter a tip before submitting.");
+    }
+  }
+
   </script>
   <link rel="stylesheet" href="navbardetails/navbar.css">
   <script src="navbardetails/navbar.js"></script>
