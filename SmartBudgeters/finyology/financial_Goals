@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Budgeters - Financial Goals</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --success: #4ad66d;
+            --error: #e63946;
+            --warning: #ff9e00;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        header {
+            padding: 2rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            clip-path: ellipse(100% 100% at 50% 0%);
+            padding-bottom: 6rem;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            color: var(--accent);
+        }
+        
+        .logo-text {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(to right, white 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 2;
+            margin-top: -5rem;
+            padding: 0 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+        
+        .goals-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            text-align: center;
+        }
+        
+        .form-subtitle {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #6c757d;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.1);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+        }
+        
+        .input-icon-wrapper {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 1rem;
+            color: #6c757d;
+        }
+        
+        .icon-input {
+            padding-right: 3rem;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(76, 201, 240, 0.4);
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 201, 240, 0.5);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--dark);
+            border: 2px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(76, 201, 240, 0.1);
+            width: 100%;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(76, 201, 240, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 201, 240, 0.2);
+        }
+        
+        .progress-container {
+            margin-bottom: 2.5rem;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background-color: #e9ecef;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .step.active .step-number {
+            background-color: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+        }
+        
+        .step.completed .step-number {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-align: center;
+        }
+        
+        .step.active .step-label {
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        
+        .progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 4px;
+            width: 66.66%;
+            transition: all 0.3s ease;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(67, 97, 238, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            background: rgba(67, 97, 238, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .currency-input {
+            position: relative;
+        }
+        
+        .currency-input::before {
+            content: "$";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        .currency-input input {
+            padding-left: 2rem;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            filter: blur(40px);
+        }
+        
+        .element-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: 10%;
+            right: 5%;
+        }
+        
+        .element-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            bottom: 15%;
+            left: 10%;
+        }
+        
+        .element-3 {
+            width: 250px;
+            height: 250px;
+            background: var(--success);
+            top: 40%;
+            right: 15%;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            background: var(--success);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateX(200%);
+            transition: transform 0.4s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: var(--error);
+        }
+        
+        .is-invalid {
+            border-color: var(--error) !important;
+        }
+        
+        .invalid-feedback {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .goal-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+        
+        .goal-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+        
+        .goal-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .goal-card h3 i {
+            background: rgba(67, 97, 238, 0.1);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        
+        .goal-type {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .type-short {
+            background: rgba(76, 201, 240, 0.2);
+            color: var(--accent);
+        }
+        
+        .type-long {
+            background: rgba(74, 214, 109, 0.2);
+            color: var(--success);
+        }
+        
+        .goal-progress {
+            margin-top: 1rem;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+        
+        .progress-bar-goal {
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .goal-1 .progress-fill {
+            width: 35%;
+            background-color: var(--accent);
+        }
+        
+        .goal-2 .progress-fill {
+            width: 65%;
+            background-color: var(--primary);
+        }
+        
+        .goal-3 .progress-fill {
+            width: 20%;
+            background-color: var(--success);
+        }
+        
+        .risk-slider {
+            width: 100%;
+            height: 10px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, var(--success), var(--warning), var(--error));
+            border-radius: 5px;
+            outline: none;
+            margin: 1.5rem 0;
+        }
+        
+        .risk-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        
+        .risk-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: -10px;
+        }
+        
+        .risk-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .risk-label.active {
+            color: var(--primary);
+        }
+        
+        .risk-label i {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .preference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .preference-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.2rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .preference-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+        }
+        
+        .preference-card.selected {
+            border-color: var(--accent);
+            background: rgba(76, 201, 240, 0.1);
+        }
+        
+        .preference-card i {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+        
+        .preference-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .goals-card {
+                padding: 1.5rem;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .form-row .form-group {
+                width: 100%;
+            }
+            
+            .button-row {
+                flex-direction: column;
+            }
+            
+            .preference-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element element-1"></div>
+        <div class="floating-element element-2"></div>
+        <div class="floating-element element-3"></div>
+    </div>
+    
+    <div class="notification" id="notification">Goals saved successfully!</div>
+    
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-wallet logo-icon"></i>
+            <h1 class="logo-text">Smart Budgeters</h1>
+        </div>
+        <p class="tagline">Set your financial goals and track your progress</p>
+    </header>
+    
+    <div class="main-content">
+        <div class="goals-card">
+            <h2 class="form-title">Financial Goals</h2>
+            <p class="form-subtitle">Define your financial objectives to create a personalized plan</p>
+            
+            <div class="progress-container">
+                <div class="progress-steps">
+                    <div class="step completed">
+                        <div class="step-number"><i class="fas fa-check"></i></div>
+                        <div class="step-label">Personal Info</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Financial Goals</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Confirmation</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+            </div>
+
+            <form id="goalsForm">
+                <div class="section-title">
+                    <i class="fas fa-bullseye"></i>
+                    <span>Financial Objectives</span>
+                </div>
+                
+                <div class="goal-card">
+                    <span class="goal-type type-short">Short-term Goal</span>
+                    <h3><i class="fas fa-home"></i> Emergency Fund</h3>
+                    <div class="form-group">
+                        <label for="emergencyTarget" class="form-label">Target Amount</label>
+                        <div class="currency-input">
+                            <input type="number" id="emergencyTarget" name="emergencyTarget" class="form-control" placeholder="0.00" min="0" step="100">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="emergencyDate" class="form-label">Target Date</label>
+                        <div class="input-icon-wrapper">
+                            <input type="date" id="emergencyDate" name="emergencyDate" class="form-control icon-input">
+                            <i class="fas fa-calendar input-icon"></i>
+                        </div>
+                    </div>
+                    <div class="goal-progress">
+                        <div class="progress-info">
+                            <span>Progress: 35%</span>
+                            <span>$1,750 / $5,000</span>
+                        </div>
+                        <div class="progress-bar-goal goal-1">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="goal-card">
+                    <span class="goal-type type-short">Short-term Goal</span>
+                    <h3><i class="fas fa-umbrella-beach"></i> Vacation Fund</h3>
+                    <div class="form-group">
+                        <label for="vacationTarget" class="form-label">Target Amount</label>
+                        <div class="currency-input">
+                            <input type="number" id="vacationTarget" name="vacationTarget" class="form-control" placeholder="0.00" min="0" step="100">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vacationDate" class="form-label">Target Date</label>
+                        <div class="input-icon-wrapper">
+                            <input type="date" id="vacationDate" name="vacationDate" class="form-control icon-input">
+                            <i class="fas fa-calendar input-icon"></i>
+                        </div>
+                    </div>
+                    <div class="goal-progress">
+                        <div class="progress-info">
+                            <span>Progress: 65%</span>
+                            <span>$1,300 / $2,000</span>
+                        </div>
+                        <div class="progress-bar-goal goal-2">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="goal-card">
+                    <span class="goal-type type-long">Long-term Goal</span>
+                    <h3><i class="fas fa-piggy-bank"></i> Retirement Savings</h3>
+                    <div class="form-group">
+                        <label for="retirementTarget" class="form-label">Target Amount</label>
+                        <div class="currency-input">
+                            <input type="number" id="retirementTarget" name="retirementTarget" class="form-control" placeholder="0.00" min="0" step="1000">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="retirementDate" class="form-label">Target Date</label>
+                        <div class="input-icon-wrapper">
+                            <input type="date" id="retirementDate" name="retirementDate" class="form-control icon-input">
+                            <i class="fas fa-calendar input-icon"></i>
+                        </div>
+                    </div>
+                    <div class="goal-progress">
+                        <div class="progress-info">
+                            <span>Progress: 20%</span>
+                            <span>$12,000 / $60,000</span>
+                        </div>
+                        <div class="progress-bar-goal goal-3">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Risk Tolerance</span>
+                </div>
+                
+                <div class="form-group">
+                    <p>How much risk are you comfortable with for your investments?</p>
+                    <input type="range" min="1" max="5" value="3" class="risk-slider" id="riskTolerance">
+                    <div class="risk-labels">
+                        <div class="risk-label" data-value="1">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Conservative</span>
+                        </div>
+                        <div class="risk-label" data-value="2">
+                            <i class="fas fa-balance-scale"></i>
+                            <span>Moderately<br>Conservative</span>
+                        </div>
+                        <div class="risk-label active" data-value="3">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Moderate</span>
+                        </div>
+                        <div class="risk-label" data-value="4">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Moderately<br>Aggressive</span>
+                        </div>
+                        <div class="risk-label" data-value="5">
+                            <i class="fas fa-bolt"></i>
+                            <span>Aggressive</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-title">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Investment Preferences</span>
+                </div>
+                
+                <div class="form-group">
+                    <p>Select the types of investments you're interested in:</p>
+                    <div class="preference-grid">
+                        <div class="preference-card" data-pref="stocks">
+                            <i class="fas fa-chart-line"></i>
+                            <h4>Stocks</h4>
+                        </div>
+                        <div class="preference-card" data-pref="bonds">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <h4>Bonds</h4>
+                        </div>
+                        <div class="preference-card selected" data-pref="mutual">
+                            <i class="fas fa-chart-pie"></i>
+                            <h4>Mutual Funds</h4>
+                        </div>
+                        <div class="preference-card" data-pref="etf">
+                            <i class="fas fa-boxes"></i>
+                            <h4>ETFs</h4>
+                        </div>
+                        <div class="preference-card" data-pref="realestate">
+                            <i class="fas fa-home"></i>
+                            <h4>Real Estate</h4>
+                        </div>
+                        <div class="preference-card" data-pref="crypto">
+                            <i class="fas fa-coins"></i>
+                            <h4>Crypto</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="button" class="btn btn-secondary" id="backButton">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">Smart Budgeters</div>
+        <p>&copy; 2025 Smart Budgeters. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get user data from localStorage
+            const storedUser = localStorage.getItem('user');
+            let userProfile = storedUser ? JSON.parse(storedUser) : {};
+            
+            // Initialize form with existing data
+            if (userProfile.financialGoals) {
+                const goals = userProfile.financialGoals;
+                
+                // Emergency Fund
+                if (goals.emergencyTarget) {
+                    document.getElementById('emergencyTarget').value = goals.emergencyTarget;
+                }
+                if (goals.emergencyDate) {
+                    document.getElementById('emergencyDate').value = goals.emergencyDate;
+                }
+                
+                // Vacation Fund
+                if (goals.vacationTarget) {
+                    document.getElementById('vacationTarget').value = goals.vacationTarget;
+                }
+                if (goals.vacationDate) {
+                    document.getElementById('vacationDate').value = goals.vacationDate;
+                }
+                
+                // Retirement Savings
+                if (goals.retirementTarget) {
+                    document.getElementById('retirementTarget').value = goals.retirementTarget;
+                }
+                if (goals.retirementDate) {
+                    document.getElementById('retirementDate').value = goals.retirementDate;
+                }
+                
+                // Risk Tolerance
+                if (goals.riskTolerance) {
+                    document.getElementById('riskTolerance').value = goals.riskTolerance;
+                    updateRiskLabels(goals.riskTolerance);
+                }
+                
+                // Investment Preferences
+                if (goals.investmentPreferences) {
+                    goals.investmentPreferences.forEach(pref => {
+                        const card = document.querySelector(`.preference-card[data-pref="${pref}"]`);
+                        if (card) {
+                            card.classList.add('selected');
+                        }
+                    });
+                }
+            }
+            
+            // Risk slider interaction
+            const riskSlider = document.getElementById('riskTolerance');
+            const riskLabels = document.querySelectorAll('.risk-label');
+            
+            riskSlider.addEventListener('input', function() {
+                updateRiskLabels(this.value);
+            });
+            
+            function updateRiskLabels(value) {
+                riskLabels.forEach(label => {
+                    label.classList.remove('active');
+                    if (label.dataset.value === value) {
+                        label.classList.add('active');
+                    }
+                });
+            }
+            
+            // Investment preference selection
+            const prefCards = document.querySelectorAll('.preference-card');
+            prefCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+            
+            // Form submission
+            const form = document.getElementById('goalsForm');
+            const notification = document.getElementById('notification');
+            
+            function showNotification(message) {
+                notification.textContent = message;
+                notification.className = 'notification show';
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Gather form data
+                const goalsData = {
+                    emergencyTarget: document.getElementById('emergencyTarget').value,
+                    emergencyDate: document.getElementById('emergencyDate').value,
+                    vacationTarget: document.getElementById('vacationTarget').value,
+                    vacationDate: document.getElementById('vacationDate').value,
+                    retirementTarget: document.getElementById('retirementTarget').value,
+                    retirementDate: document.getElementById('retirementDate').value,
+                    riskTolerance: document.getElementById('riskTolerance').value,
+                    investmentPreferences: []
+                };
+                
+                // Get selected investment preferences
+                const selectedPrefs = document.querySelectorAll('.preference-card.selected');
+                selectedPrefs.forEach(card => {
+                    goalsData.investmentPreferences.push(card.dataset.pref);
+                });
+                
+                // Update user profile
+                userProfile.financialGoals = goalsData;
+                localStorage.setItem('user', JSON.stringify(userProfile));
+                
+                // Show success message
+                showNotification('Financial goals saved successfully!');
+                
+                // Navigate to next page after a delay
+                setTimeout(() => {
+                    window.location.href = 'confirmation.html';
+                }, 1500);
+            });
+            
+            // Back button functionality
+            const backButton = document.getElementById('backButton');
+            backButton.addEventListener('click', function() {
+                window.location.href = 'personal-info.html';
+            });
+        });
+    </script>
+</body>
+</html>
