@@ -15,6 +15,7 @@
             --dark: #2b2d42;
             --light: #f8f9fa;
             --success: #4ad66d;
+            --error: #e63946;
         }
         
         * {
@@ -376,6 +377,39 @@
             color: var(--accent);
         }
         
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            background: var(--success);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateX(200%);
+            transition: transform 0.4s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: var(--error);
+        }
+        
+        .is-invalid {
+            border-color: var(--error) !important;
+        }
+        
+        .invalid-feedback {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
         @media (max-width: 768px) {
             .logo-text {
                 font-size: 2rem;
@@ -409,11 +443,12 @@
     </style>
 </head>
 <body>
-    <div id="navbar-placeholder"></div>
     <div class="floating-elements">
         <div class="floating-element element-1"></div>
         <div class="floating-element element-2"></div>
     </div>
+    
+    <div class="notification" id="notification">Profile updated successfully!</div>
     
     <header>
         <div class="logo-container">
@@ -431,223 +466,322 @@
             <div class="progress-container">
                 <div class="progress-steps">
                     <div class="step active">
-                        <div class="step-number">
-</div>
-<div class="step-label">Personal Info</div>
-</div>
+                        <div class="step-number">1</div>
+                        <div class="step-label">Personal Info</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Financial Goals</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Confirmation</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+            </div>
 
-</div>
-<div class="progress-bar">
-<div class="progress"></div>
-</div>
-</div>
+            <form id="personalInfoForm">
+                <div class="section-title">Your Details</div>
 
-<form id="personalInfoForm">
-<div class="section-title">Your Details</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <div class="input-icon-wrapper">
+                            <input type="text" id="firstName" name="firstName" class="form-control icon-input" placeholder="Enter your first name" required>
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                        <div class="invalid-feedback">Please enter your first name</div>
+                    </div>
 
-<div class="form-row">
-<div class="form-group">
-<label for="firstName" class="form-label">First Name</label>
-<div class="input-icon-wrapper">
-    <input type="text" id="firstName" name="firstName" class="form-control icon-input" placeholder="Enter your first name" required>
-    <i class="fas fa-user input-icon"></i>
-</div>
-</div>
+                    <div class="form-group">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <div class="input-icon-wrapper">
+                            <input type="text" id="lastName" name="lastName" class="form-control icon-input" placeholder="Enter your last name" required>
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                        <div class="invalid-feedback">Please enter your last name</div>
+                    </div>
+                </div>
 
-<div class="form-group">
-<label for="lastName" class="form-label">Last Name</label>
-<div class="input-icon-wrapper">
-    <input type="text" id="lastName" name="lastName" class="form-control icon-input" placeholder="Enter your last name" required>
-    <i class="fas fa-user input-icon"></i>
-</div>
-</div>
-</div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <div class="input-icon-wrapper">
+                        <input type="email" id="email" name="email" class="form-control icon-input" placeholder="Enter your email address" required>
+                        <i class="fas fa-envelope input-icon"></i>
+                    </div>
+                    <div class="invalid-feedback">Please enter a valid email address</div>
+                </div>
 
-<div class="form-group">
-<label for="email" class="form-label">Email Address</label>
-<div class="input-icon-wrapper">
-<input type="email" id="email" name="email" class="form-control icon-input" placeholder="Enter your email address" required>
-<i class="fas fa-envelope input-icon"></i>
-</div>
-</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone Number (Optional)</label>
+                        <div class="input-icon-wrapper">
+                            <input type="tel" id="phone" name="phone" class="form-control icon-input" placeholder="Enter your phone number">
+                            <i class="fas fa-phone input-icon"></i>
+                        </div>
+                    </div>
 
-<div class="form-row">
-<div class="form-group">
-<label for="phone" class="form-label">Phone Number (Optional)</label>
-<div class="input-icon-wrapper">
-    <input type="tel" id="phone" name="phone" class="form-control icon-input" placeholder="Enter your phone number">
-    <i class="fas fa-phone input-icon"></i>
-</div>
-</div>
+                    <div class="form-group">
+                        <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                        <div class="input-icon-wrapper">
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control icon-input" required>
+                            <i class="fas fa-calendar input-icon"></i>
+                        </div>
+                        <div class="invalid-feedback">Please enter your date of birth</div>
+                    </div>
+                </div>
 
-<div class="form-group">
-<label for="dateOfBirth" class="form-label">Date of Birth</label>
-<div class="input-icon-wrapper">
-    <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control icon-input" required>
-    <i class="fas fa-calendar input-icon"></i>
-</div>
-</div>
-</div>
+                <div class="section-title">Location</div>
 
-<div class="section-title">Location</div>
+                <div class="form-group">
+                    <label for="country" class="form-label">Country</label>
+                    <div class="input-icon-wrapper">
+                        <select id="country" name="country" class="form-control icon-input" required>
+                            <option value="" selected disabled>Select your country</option>
+                            <option value="us">United States</option>
+                            <option value="ca">Canada</option>
+                            <option value="uk">United Kingdom</option>
+                            <option value="au">Australia</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <i class="fas fa-globe input-icon"></i>
+                    </div>
+                    <div class="invalid-feedback">Please select your country</div>
+                </div>
 
-<div class="form-group">
-<label for="country" class="form-label">Country</label>
-<div class="input-icon-wrapper">
-<select id="country" name="country" class="form-control icon-input" required>
-    <option value="" selected disabled>Select your country</option>
-    <option value="us">United States</option>
-    <option value="ca">Canada</option>
-    <option value="uk">United Kingdom</option>
-    <option value="au">Australia</option>
-    <option value="other">Other</option>
-</select>
-<i class="fas fa-globe input-icon"></i>
-</div>
-</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city" class="form-label">City</label>
+                        <div class="input-icon-wrapper">
+                            <input type="text" id="city" name="city" class="form-control icon-input" placeholder="Enter your city" required>
+                            <i class="fas fa-city input-icon"></i>
+                        </div>
+                        <div class="invalid-feedback">Please enter your city</div>
+                    </div>
 
-<div class="form-row">
-<div class="form-group">
-<label for="city" class="form-label">City</label>
-<div class="input-icon-wrapper">
-    <input type="text" id="city" name="city" class="form-control icon-input" placeholder="Enter your city" required>
-    <i class="fas fa-city input-icon"></i>
-</div>
-</div>
+                    <div class="form-group">
+                        <label for="zipCode" class="form-label">Zip/Postal Code</label>
+                        <div class="input-icon-wrapper">
+                            <input type="text" id="zipCode" name="zipCode" class="form-control icon-input" placeholder="Enter your zip/postal code" required>
+                            <i class="fas fa-map-marker-alt input-icon"></i>
+                        </div>
+                        <div class="invalid-feedback">Please enter your zip/postal code</div>
+                    </div>
+                </div>
 
-<div class="form-group">
-<label for="zipCode" class="form-label">Zip/Postal Code</label>
-<div class="input-icon-wrapper">
-    <input type="text" id="zipCode" name="zipCode" class="form-control icon-input" placeholder="Enter your zip/postal code" required>
-    <i class="fas fa-map-marker-alt input-icon"></i>
-</div>
-</div>
-</div>
+                <div class="section-title">Financial Background</div>
 
-<div class="section-title">Financial Background</div>
+                <div class="form-group">
+                    <label for="employmentStatus" class="form-label">Employment Status</label>
+                    <div class="input-icon-wrapper">
+                        <select id="employmentStatus" name="employmentStatus" class="form-control icon-input" required>
+                            <option value="" selected disabled>Select your employment status</option>
+                            <option value="fullTime">Full-time Employed</option>
+                            <option value="partTime">Part-time Employed</option>
+                            <option value="selfEmployed">Self-employed</option>
+                            <option value="student">Student</option>
+                            <option value="retired">Retired</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <i class="fas fa-briefcase input-icon"></i>
+                    </div>
+                    <div class="invalid-feedback">Please select your employment status</div>
+                </div>
 
-<div class="form-group">
-<label for="employmentStatus" class="form-label">Employment Status</label>
-<div class="input-icon-wrapper">
-<select id="employmentStatus" name="employmentStatus" class="form-control icon-input" required>
-    <option value="" selected disabled>Select your employment status</option>
-    <option value="fullTime">Full-time Employed</option>
-    <option value="partTime">Part-time Employed</option>
-    <option value="selfEmployed">Self-employed</option>
-    <option value="student">Student</option>
-    <option value="retired">Retired</option>
-    <option value="unemployed">Unemployed</option>
-    <option value="other">Other</option>
-</select>
-<i class="fas fa-briefcase input-icon"></i>
-</div>
-</div>
+                <div class="form-group">
+                    <label for="monthlyIncome" class="form-label">Monthly Income (Estimate)</label>
+                    <div class="currency-input">
+                        <input type="number" id="monthlyIncome" name="monthlyIncome" class="form-control" placeholder="0.00" min="0" step="0.01" required>
+                    </div>
+                    <div class="invalid-feedback">Please enter your monthly income</div>
+                </div>
 
-<div class="form-group">
-<label for="monthlyIncome" class="form-label">Monthly Income (Estimate)</label>
-<div class="currency-input">
-<input type="number" id="monthlyIncome" name="monthlyIncome" class="form-control" placeholder="0.00" min="0" step="0.01" required>
-</div>
-</div>
+                <div class="form-group">
+                    <label for="housingStatus" class="form-label">Housing Status</label>
+                    <div class="input-icon-wrapper">
+                        <select id="housingStatus" name="housingStatus" class="form-control icon-input" required>
+                            <option value="" selected disabled>Select your housing status</option>
+                            <option value="ownHome">Own Home</option>
+                            <option value="mortgaged">Mortgaged Home</option>
+                            <option value="renting">Renting</option>
+                            <option value="livingWithFamily">Living with Family</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <i class="fas fa-home input-icon"></i>
+                    </div>
+                    <div class="invalid-feedback">Please select your housing status</div>
+                </div>
 
-<div class="form-group">
-<label for="housingStatus" class="form-label">Housing Status</label>
-<div class="input-icon-wrapper">
-<select id="housingStatus" name="housingStatus" class="form-control icon-input" required>
-    <option value="" selected disabled>Select your housing status</option>
-    <option value="ownHome">Own Home</option>
-    <option value="mortgaged">Mortgaged Home</option>
-    <option value="renting">Renting</option>
-    <option value="livingWithFamily">Living with Family</option>
-    <option value="other">Other</option>
-</select>
-<i class="fas fa-home input-icon"></i>
-</div>
-</div>
+                <div class="form-group">
+                    <label for="budgetingGoals" class="form-label">What are your primary budgeting goals?</label>
+                    <div class="input-icon-wrapper">
+                        <select id="budgetingGoals" name="budgetingGoals" class="form-control icon-input" multiple required>
+                            <option value="saveMoney">Save Money</option>
+                            <option value="payDebt">Pay Off Debt</option>
+                            <option value="buyHouse">Save for a House</option>
+                            <option value="retirement">Plan for Retirement</option>
+                            <option value="education">Education Expenses</option>
+                            <option value="vacation">Save for Vacation</option>
+                            <option value="emergency">Build Emergency Fund</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <i class="fas fa-bullseye input-icon"></i>
+                    </div>
+                    <div class="invalid-feedback">Please select at least one goal</div>
+                    <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple options</small>
+                </div>
 
-<div class="form-group">
-<label for="budgetingGoals" class="form-label">What are your primary budgeting goals?</label>
-<div class="input-icon-wrapper">
-<select id="budgetingGoals" name="budgetingGoals" class="form-control icon-input" multiple required>
-    <option value="saveMoney">Save Money</option>
-    <option value="payDebt">Pay Off Debt</option>
-    <option value="buyHouse">Save for a House</option>
-    <option value="retirement">Plan for Retirement</option>
-    <option value="education">Education Expenses</option>
-    <option value="vacation">Save for Vacation</option>
-    <option value="emergency">Build Emergency Fund</option>
-    <option value="other">Other</option>
-</select>
-<i class="fas fa-bullseye input-icon"></i>
-</div>
-<small class="form-text text-muted">Hold Ctrl/Cmd to select multiple options</small>
-</div>
+                <div class="button-row">
+                    <button type="button" class="btn btn-secondary" id="backButton">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-<div class="button-row">
-<button type="button" class="btn btn-secondary">
-<i class="fas fa-arrow-left"></i> Back
-</button>
-<button type="submit" class="btn btn-primary">
-Continue <i class="fas fa-arrow-right"></i>
-</button>
-</div>
-</form>
-</div>
-</div>
+    <footer>
+        <div class="footer-logo">Smart Budgeters</div>
+        <p>&copy; 2025 Smart Budgeters. All rights reserved.</p>
+    </footer>
 
-<footer>
-<div class="footer-logo">Smart Budgeters</div>
-<p>&copy; 2025 Smart Budgeters. All rights reserved.</p>
-</footer>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-// Form validation
-const form = document.getElementById('personalInfoForm');
-
-form.addEventListener('submit', function(e) {
-e.preventDefault();
-
-// Simple validation check
-let isValid = true;
-const requiredFields = form.querySelectorAll('[required]');
-
-requiredFields.forEach(field => {
-if (!field.value) {
-isValid = false;
-field.classList.add('is-invalid');
-} else {
-field.classList.remove('is-invalid');
-}
-});
-
-if (isValid) {
-// Store form data in session storage
-const formData = new FormData(form);
-const formDataObj = {};
-
-formData.forEach((value, key) => {
-formDataObj[key] = value;
-});
-
-sessionStorage.setItem('personalInfo', JSON.stringify(formDataObj));
-
-// Navigate to the next page
-window.location.href = 'financial-goals.html';
-} else {
-// Show validation message
-alert('Please fill in all required fields');
-}
-});
-
-// Back button functionality
-const backButton = document.querySelector('.btn-secondary');
-backButton.addEventListener('click', function() {
-window.location.href = 'dashboard.html';
-});
-});
-</script>
-<link rel="stylesheet" href="navbardetails/navbar.css">
-  <script src="navbardetails/navbar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get last signed-up user
+            const users = JSON.parse(localStorage.getItem('smartBudgetersUsers')) || [];
+            if (users.length === 0) {
+                alert("No user found. Please sign up first.");
+                return;
+            }
+        
+            const latestUser = users[users.length - 1];
+            const userId = latestUser.id;
+        
+            // Get full profile
+            const fullUserData = JSON.parse(localStorage.getItem(`smartBudgeters_${userId}`));
+            const profile = fullUserData?.profile || {};
+        
+            // Fill personal info form
+            document.getElementById('firstName').value = profile.firstName || '';
+            document.getElementById('lastName').value = profile.lastName || '';
+            document.getElementById('email').value = profile.email || '';
+        
+            // Fill optional fields if they exist
+            const optionalFields = ['phone', 'dateOfBirth', 'country', 'city', 'zipCode', 'employmentStatus', 'monthlyIncome', 'housingStatus'];
+            optionalFields.forEach(field => {
+                if (profile[field]) {
+                    const el = document.getElementById(field);
+                    if (el) el.value = profile[field];
+                }
+            });
+        
+            // Fill multiple selection (goals)
+            if (profile.budgetingGoals) {
+                const goals = Array.isArray(profile.budgetingGoals) ? profile.budgetingGoals : [profile.budgetingGoals];
+                const goalsSelect = document.getElementById('budgetingGoals');
+                for (let i = 0; i < goalsSelect.options.length; i++) {
+                    if (goals.includes(goalsSelect.options[i].value)) {
+                        goalsSelect.options[i].selected = true;
+                    }
+                }
+            }
+        
+            // Form validation
+            const form = document.getElementById('personalInfoForm');
+            const notification = document.getElementById('notification');
+        
+            function showNotification(message, isError = false) {
+                notification.textContent = message;
+                notification.className = 'notification';
+                if (isError) notification.classList.add('error');
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+        
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+        
+                // Clear previous errors
+                form.querySelectorAll('.is-invalid').forEach(f => f.classList.remove('is-invalid'));
+                form.querySelectorAll('.invalid-feedback').forEach(f => f.style.display = 'none');
+        
+                let isValid = true;
+                const requiredFields = form.querySelectorAll('[required]');
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        isValid = false;
+                        field.classList.add('is-invalid');
+                        const feedback = field.closest('.form-group').querySelector('.invalid-feedback');
+                        if (feedback) feedback.style.display = 'block';
+                    }
+                });
+        
+                // Validate goals selection
+                const goalsSelect = document.getElementById('budgetingGoals');
+                const selectedGoals = Array.from(goalsSelect.selectedOptions).map(o => o.value);
+                if (selectedGoals.length === 0) {
+                    isValid = false;
+                    goalsSelect.classList.add('is-invalid');
+                    const feedback = goalsSelect.closest('.form-group').querySelector('.invalid-feedback');
+                    if (feedback) feedback.style.display = 'block';
+                }
+        
+                if (isValid) {
+                    // Collect updated form data
+                    const formData = {
+                        firstName: document.getElementById('firstName').value,
+                        lastName: document.getElementById('lastName').value,
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        dateOfBirth: document.getElementById('dateOfBirth').value,
+                        country: document.getElementById('country').value,
+                        city: document.getElementById('city').value,
+                        zipCode: document.getElementById('zipCode').value,
+                        employmentStatus: document.getElementById('employmentStatus').value,
+                        monthlyIncome: document.getElementById('monthlyIncome').value,
+                        housingStatus: document.getElementById('housingStatus').value,
+                        budgetingGoals: selectedGoals
+                    };
+        
+                    // Update full profile and save back
+                    fullUserData.profile = { ...fullUserData.profile, ...formData };
+                    localStorage.setItem(`smartBudgeters_${userId}`, JSON.stringify(fullUserData));
+        
+                    showNotification("Profile updated successfully!");
+        
+                    // Navigate
+                    setTimeout(() => {
+                        window.location.href = "financial-goals.html";
+                    }, 1500);
+                } else {
+                    showNotification("Please fill in all required fields", true);
+                }
+            });
+        
+            // Back button
+            const backButton = document.getElementById('backButton');
+            backButton.addEventListener('click', function() {
+                window.location.href = 'dashboard.html';
+            });
+        
+            // Format currency
+            const incomeInput = document.getElementById('monthlyIncome');
+            incomeInput.addEventListener('blur', function() {
+                if (this.value) {
+                    this.value = parseFloat(this.value).toFixed(2);
+                }
+            });
+        });
+        </script>
+        
 </body>
 </html>
