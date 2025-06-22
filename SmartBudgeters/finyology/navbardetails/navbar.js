@@ -33,9 +33,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     </ul>
                 </li>
                
-                <li><a href="trackExpense.html">Track Expenses 📊</a></li>
-                <li><a href="analysisforspendingpatterns.html">Spending analysis 📈</a></li>
-                
+                 <li class="dropdown">
+                  <a href="#">Analysis & Report 💡 <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="trackExpense.html">Track Expenses 📊</a></li>
+                        <li><a href="analysisforspendingpatterns.html">Spending analysis 📈</a></li>
+                         <li><a href="reportgenerator.html">Report generator 📄</a></li>
+                    </ul>
+                  </li>
             </ul>
         </div>
     </nav>
