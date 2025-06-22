@@ -663,6 +663,7 @@
     </style>
 </head>
 <body>
+     <div id="navbar-placeholder"></div>
     <div class="floating-elements">
         <div class="floating-element element-1"></div>
         <div class="floating-element element-2"></div>
@@ -684,7 +685,7 @@
             <h2 class="form-title">Financial Goals</h2>
             <p class="form-subtitle">Define your financial objectives to create a personalized plan</p>
             
-            <div class="progress-container">
+           <!-- <div class="progress-container">
                 <div class="progress-steps">
                     <div class="step completed">
                         <div class="step-number"><i class="fas fa-check"></i></div>
@@ -702,7 +703,7 @@
                 <div class="progress-bar">
                     <div class="progress"></div>
                 </div>
-            </div>
+            </div>-->
 
             <form id="goalsForm">
                 <div class="section-title">
@@ -863,7 +864,7 @@
                         <i class="fas fa-arrow-left"></i> Back
                     </button>
                     <button type="submit" class="btn btn-primary">
-                        Continue <i class="fas fa-arrow-right"></i>
+                        Save 
                     </button>
                 </div>
             </form>
@@ -994,7 +995,7 @@
                 
                 // Navigate to next page after a delay
                 setTimeout(() => {
-                    window.location.href = 'confirmation.html';
+                    window.location.href = 'dashboard.html';
                 }, 1500);
             });
             
@@ -1005,5 +1006,7 @@
             });
         });
     </script>
+     <link rel="stylesheet" href="navbardetails/navbar.css">
+  <script src="navbardetails/navbar.js"></script>
 </body>
 </html>

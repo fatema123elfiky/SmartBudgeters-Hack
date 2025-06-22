@@ -24,8 +24,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         <li><a href="activity.html">Activities🧩</a></li>
                     </ul>
                 </li>
-                <li><a href="budget.html">Set Income & budget 💵</a></li>
-        
+                <li class="dropdown">
+                    <a href="#">Goals & budget ✨<i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                     <li><a href="budget.html">Set Income & budget 💵</a></li>
+                     <li><a href="financial_Goals.html">Set Goal🎯</a></li>
+                       
+                    </ul>
+                </li>
+               
                 <li><a href="trackExpense.html">Track Expenses 📊</a></li>
                 <li><a href="analysisforspendingpatterns.html">Spending analysis 📈</a></li>
                 
