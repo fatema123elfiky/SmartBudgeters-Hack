@@ -6,11 +6,3 @@
 #### 4.Menna Abd-ElGawad
 #### 5. Malak Mohamed refaat
 
-##### first presentation 
-https://www.canva.com/design/DAGlXGhyyYw/7R7GwpAWB9KK75iJ0SGNZA/edit
-
-##### figma link
-https://www.figma.com/design/IRoOllJ8nQzWSSjCKuDaiu/SmartBudgters?t=QaRBkdHV57f22R1Q-1
-
-##### video link for first start
-https://youtu.be/tyFkvdENG-U
